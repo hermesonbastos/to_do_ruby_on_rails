@@ -9,5 +9,4 @@ class User < ApplicationRecord
   validates :profile_photo,
             length: { maximum: 1.megabyte },
             allow_nil: true
-
 end
