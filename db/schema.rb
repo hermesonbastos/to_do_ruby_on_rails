@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_09_065718) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_09_070554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_09_065718) do
     t.datetime "updated_at", null: false
     t.index ["board_id", "position"], name: "index_columns_on_board_id_and_position"
     t.index ["board_id"], name: "index_columns_on_board_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "color", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "labels_tasks", id: false, force: :cascade do |t|
+    t.bigint "label_id", null: false
+    t.bigint "task_id", null: false
+    t.index ["label_id", "task_id"], name: "index_labels_tasks_on_label_id_and_task_id", unique: true
+    t.index ["task_id", "label_id"], name: "index_labels_tasks_on_task_id_and_label_id"
   end
 
   create_table "tasks", force: :cascade do |t|

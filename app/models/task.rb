@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :column
+  has_and_belongs_to_many :labels
 
   validates :title, presence: true
   validates :difficulty,
