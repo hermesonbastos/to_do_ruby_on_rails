@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  column: one
+  title: MyString
+  description: MyText
+  difficulty: 1
+  due_date: 2025-05-09 03:49:36
+
+two:
+  column: two
+  title: MyString
+  description: MyText
+  difficulty: 1
+  due_date: 2025-05-09 03:49:36
