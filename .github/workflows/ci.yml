@@ -87,7 +87,7 @@ jobs:
           node-version: '22.x'
 
       - name: Install JS dependencies
-        run: npm ci
+        run: npm install
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
