@@ -4,7 +4,6 @@ one:
   board: one
   title: MyString
   description: MyText
-  due_date: 2025-05-09 02:48:55
   position: 1
   is_done_column: false
 
@@ -12,6 +11,5 @@ two:
   board: two
   title: MyString
   description: MyText
-  due_date: 2025-05-09 02:48:55
   position: 1
   is_done_column: false
