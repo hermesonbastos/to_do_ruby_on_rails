@@ -4,7 +4,6 @@ class CreateColumns < ActiveRecord::Migration[8.0]
       t.references :board, null: false, foreign_key: true
       t.string :title, null: false
       t.text :description
-      t.datetime :due_date
       t.integer :position, null: false, default: 0
       t.boolean :is_done_column, null: false, default: false
 
