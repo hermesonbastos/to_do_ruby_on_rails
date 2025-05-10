@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get    "/login",  to: "sessions#new", as: :login
   post   "/login",  to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: :logout
-
+get '/auth/:provider/callback', to: 'sessions#google_auth'
+get '/auth/:provider', to: 'sessions#passthru', as: :auth_request # opcional para Rails 7+
   resources :users, only: [ :new, :create, :show ]
 end
