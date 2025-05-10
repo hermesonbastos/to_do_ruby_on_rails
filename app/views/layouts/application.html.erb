@@ -22,8 +22,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <h1 class="text-4xl font-bold p-4">DaisyUI configurado com Sucesso!</h1>
-    <%= yield %>
-  </body>
+  <body class="min-h-screen flex flex-col">
+    <main class="flex-grow">
+      <%= yield %>
+    </main>
+</body>
 </html>

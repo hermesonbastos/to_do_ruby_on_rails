@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  root "home#index"
-  get "home/index"
+  root "auth#new"
 
   get  "/auth", to: "auth#new", as: :auth
   post "/auth", to: "auth#create"
