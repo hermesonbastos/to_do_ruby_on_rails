@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
-  root "auth#new"
+  get    "/auth", to: "auth#new", as: :auth
+  post   "/auth", to: "auth#create"
+  delete "/logout", to: "auth#destroy", as: :logout
 
-  get  "/auth", to: "auth#new", as: :auth
-  post "/auth", to: "auth#create"
+  get "/dashboard", to: "boards#index", as: :dashboard
 
-  get  "/signup", to: "users#new", as: :signup
-  post "/signup", to: "users#create"
+  resources :users, only: :show
 
-  get    "/login",  to: "sessions#new", as: :login
-  post   "/login",  to: "sessions#create"
-  delete "/logout", to: "sessions#destroy", as: :logout
-
-  resources :users, only: [ :new, :create, :show ]
+  resources :boards, only: %i[index show create]
+  get :dashboard, to: "boards#index"
 end
