@@ -1,24 +1,104 @@
-<%= render 'shared/navbar' %>
-
-<div class="pt-8 px-2">
-  <h1 class="text-3xl font-bold mb-6"><%= @board.name %></h1>
-  <% if @board.try(:description).present? %>
-    <p class="mb-8"><%= @board.description %></p>
-  <% end %>
-
-  <div class="flex gap-4 overflow-x-auto flex-nowrap">
-    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
-      teste
-    </div>
-    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
-      teste
-    </div>
-    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
-      teste
-    </div>
-    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
-      teste
-    </div>
+<div class="full-width-container">
+  <%= render 'shared/navbar' %>
+  <div class="w-full h-32 md:h-40 lg:h-48 mb-6 pt-4 md:pt-6 overflow-hidden">
+    <% if @board.banner.present? %>
+      <img  src="data:image/*;base64,<%= @board.banner %>"
+            alt="<%= @board.name %>"
+            class="w-full h-full object-cover rounded-lg">
+    <% else %>
+      <%= image_tag "default_board_banner.webp",
+                    alt: @board.name,
+                    class: "w-full h-full object-cover rounded-lg" %>
+    <% end %>
   </div>
 
+  <div class="px-2 w-full pb-8">
+    <div class="flex flex-col">
+      <div class="flex flex-col gap-4">
+        <div class="badge badge-neutral">
+          Criado em <%= @board.created_at.strftime("%d/%m/%Y") %>
+        </div>
+        <h1 class="text-3xl font-bold"><%= @board.name %></h1>
+        <% if @board.try(:description).present? %>
+          <p class="mb-6"><%= @board.description %></p>
+        <% end %>
+      </div>
+      
+      <div>
+        <button class="btn flex btn-accent gap-2">
+          <i class="fa-solid fa-plus"></i>
+          <p>Nova coluna</p>
+        </button>
+      </div>   
+    </div> 
+  </div>
+  
+  <div id="board-columns" class="flex gap-4 overflow-x-auto pb-4 w-full" 
+       data-controller="horizontal-scroll"
+       style="scrollbar-width: thin;">
+    <div class="card relative shadow-sm bg-base-100 w-70 min-h-100 flex-shrink-0">
+
+      <div class="flex justify-between items-center p-3 pb-0">
+        <h3 class="text-sm text-center font-semibold">Nome da coluna<h3>
+        <div class="badge transition-all cursor-pointer hover:shadow-md badge-primary text-slate-200 flex p-3 items-center rounded-sm">
+          <i class="fa-solid fa-plus"></i>
+          <p class="mb-1">nova tarefa</p>
+        </div>
+      </div>
+      
+      <div class="flex flex-col p-2 gap-2">
+        <div class="p-4 rounded-md bg-base-300 shadow-sm transition hover:cursor-pointer border border-base-200 hover:shadow-md hover:border-base-300">
+          <div>
+            <p class="font-semibold text-lg">Nome da tarefa</p>
+            <p class="text-xs mt-1">vencimento (se houver)</p>
+            <ul class="flex gap-1 mt-3">
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="p-4 rounded-md bg-base-300 shadow-sm transition hover:cursor-pointer border border-base-200 hover:shadow-md hover:border-base-300">
+          <div>
+            <p class="font-semibold">Nome da tarefa</p>
+            <p class="text-xs">vencimento (se houver)</p>
+            <ul class="flex gap-1 mt-2">
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="p-4 rounded-md bg-base-300 shadow-sm transition hover:cursor-pointer border border-base-200 hover:shadow-md hover:border-base-300">
+          <div>
+            <p class="font-semibold">Nome da tarefa</p>
+            <p class="text-xs">vencimento (se houver)</p>
+            <ul class="flex gap-1 mt-2">
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+              <li class="bg-neutral rounded-sm p-1 text-xs text-neutral-content">
+                labels
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
