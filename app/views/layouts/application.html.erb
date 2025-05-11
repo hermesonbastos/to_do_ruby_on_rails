@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="nord">
+<html data-controller="theme" data-theme="<%= @theme %>">
   <head>
     <title><%= content_for(:title) || "To Do" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -28,5 +28,5 @@
     <main class="w-full flex-grow center-content">
       <%= yield %>
     </main>
-</body>
+  </body>
 </html>

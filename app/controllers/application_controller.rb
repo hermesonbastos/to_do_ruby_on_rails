@@ -16,4 +16,10 @@ class ApplicationController < ActionController::Base
   def require_login
     redirect_to auth_path, alert: "Você precisa estar autenticado para acessar esta página." unless logged_in?
   end
+
+  before_action :set_theme
+
+  def set_theme
+    @theme = cookies[:theme] || "custom360"
+  end
 end
