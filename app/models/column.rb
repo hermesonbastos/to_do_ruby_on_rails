@@ -1,12 +1,16 @@
 class Column < ApplicationRecord
   belongs_to :board
 
-  validates :title, presence: true
-  validates :position,
-              presence: true,
-              numericality: {
-                only_integer: true,
-                greater_than_or_equal_to: 0
-              }
-  validates :is_done_column, inclusion: { in: [ true, false ] }
+  validates :name, presence: true
+  validates :position, presence: true, numericality: { only_integer: true }
+
+  before_validation :set_position, on: :create
+
+  private
+
+  def set_position
+    return if position.present?
+    max_position = board.columns.maximum(:position)
+    self.position = (max_position || -1) + 1
+  end
 end

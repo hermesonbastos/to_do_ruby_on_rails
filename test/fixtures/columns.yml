@@ -2,14 +2,14 @@
 
 one:
   board: one
-  title: MyString
+  name: MyString
   description: MyText
   position: 1
   is_done_column: false
 
 two:
   board: two
-  title: MyString
+  name: MyString
   description: MyText
   position: 1
   is_done_column: false

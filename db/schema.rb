@@ -26,7 +26,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_190722) do
 
   create_table "columns", force: :cascade do |t|
     t.bigint "board_id", null: false
-    t.string "title", null: false
+    t.string "name", null: false
     t.text "description"
     t.integer "position", default: 0, null: false
     t.boolean "is_done_column", default: false, null: false

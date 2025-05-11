@@ -1,0 +1,34 @@
+<div id="new-column-form" data-controller="new-column">
+  <%= form_with model: [board, Column.new],
+                data: { action: "turbo:submit-end->new-column#resetForm" } do |f| %>
+    <div class="flex items-start md:items-center gap-4">
+      <div class="flex flex-col md:flex-row gap-2">
+        <%= f.text_field :name,
+                        placeholder: "Nome da coluna",
+                        class: "input input-sm input-bordered",
+                        data: {
+                          new_column_target: "input",
+                          action: "keydown->new-column#handleKeydown"
+                        } %>
+
+        <div class="flex items-center gap-1">
+          <%= f.check_box :is_done_column,
+                          class: "toggle toggle-primary toggle-sm",
+                          data: { new_column_target: "toggle" } %>
+          <span class="text-xs whitespace-nowrap">Coluna Done</span>
+          <div class="tooltip ml-1" data-tip="Caso ativada, todas as tarefas nessa coluna serão consideradas como concluídas.">
+            <i class="fa-solid fa-circle-info tooltip text-xs"></i>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-1">
+        <%= f.submit "Salvar", class: "btn btn-sm btn-primary" %>
+        <button type="button"
+                class="btn btn-sm btn-ghost"
+                data-action="click->new-column#cancel">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  <% end %>
+</div>
