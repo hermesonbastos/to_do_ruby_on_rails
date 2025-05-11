@@ -2,11 +2,11 @@
             transition hover:cursor-pointer hover:shadow-lg">
   <figure class="h-18 overflow-hidden">
     <% if board.banner.present? %>
-      <img src="data:image/*;base64,<%= board.banner %>" alt="<%= board.name %>">
+      <img src="data:image/*;base64,<%= board.banner %>" alt="<%= board.name %>" class="w-full h-full object-cover">
     <% else %>
-      <%= image_tag "default_board_banner.webp", alt: board.name %>
+      <%= image_tag "default_board_banner.webp", alt: board.name, class: "w-full h-full object-cover" %>
     <% end %>
-  </figure>
+</figure>
   <div class="card-body">
     <h2 class="card-title"><%= board.name %></h2>
     <% if board.description.present? %>

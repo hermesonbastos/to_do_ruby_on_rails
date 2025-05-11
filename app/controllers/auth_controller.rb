@@ -53,6 +53,6 @@ class AuthController < ApplicationController
   def login!(user)
     session[:user_id] = user.id
     session.delete(:auth_email)
-    redirect_to dashboard_path, notice: "Login efetuado com sucesso."
+    redirect_to boards_path, notice: "Login efetuado com sucesso."
   end
 end
