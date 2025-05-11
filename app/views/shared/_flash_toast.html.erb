@@ -1,0 +1,14 @@
+<% flash.each do |type, msg| %>
+  <div id="flash-toast"
+       class="toast toast-top toast-end z-50">
+    <div class="alert alert-<%= type == 'notice' ? 'success' : 'error' %>">
+      <span><%= msg %></span>
+    </div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('flash-toast')?.remove();
+    }, 3000);
+  </script>
+<% end %>

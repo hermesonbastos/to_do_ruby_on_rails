@@ -1,0 +1,24 @@
+<%= render 'shared/navbar' %>
+
+<div class="pt-8 px-2">
+  <h1 class="text-3xl font-bold mb-6"><%= @board.name %></h1>
+  <% if @board.try(:description).present? %>
+    <p class="mb-8"><%= @board.description %></p>
+  <% end %>
+
+  <div class="flex gap-4 overflow-x-auto flex-nowrap">
+    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
+      teste
+    </div>
+    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
+      teste
+    </div>
+    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
+      teste
+    </div>
+    <div class="card shadow-sm bg-base-100 p-4 w-72 min-h-100">
+      teste
+    </div>
+  </div>
+
+</div>

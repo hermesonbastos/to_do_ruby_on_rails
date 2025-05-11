@@ -1,0 +1,12 @@
+<%= render 'shared/navbar' %>
+
+<div class="pt-8 px-2">
+  <h1 class="text-3xl font-medium mb-6">Meus quadros</h1>
+
+  <div class="flex flex-col md:flex-row flex-wrap gap-4">
+    <%= render partial: 'boards/board_card', collection: @boards, as: :board %>
+    <%= render 'boards/new_board_card' %>
+  </div>
+</div>
+
+<%= render 'boards/new_board_modal' %>
