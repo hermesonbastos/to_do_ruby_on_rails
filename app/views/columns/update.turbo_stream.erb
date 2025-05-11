@@ -1,0 +1,3 @@
+<%= turbo_stream.replace @column do %>
+  <%= render partial: "columns/column", locals: { column: @column } %>
+<% end %>

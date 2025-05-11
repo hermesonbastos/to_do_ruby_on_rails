@@ -1,0 +1,98 @@
+<div id="<%= dom_id(column) %>" 
+     data-column-id="<%= column.id %>"
+     class="card relative shadow-sm bg-base-100 w-70 min-h-100 flex-shrink-0 <%= 'border border-green-300' if column.is_done_column %>" 
+     data-controller="column-editor column-settings">
+  <div class="flex justify-between items-center p-3 pb-0">
+    <div class="flex items-center gap-2">
+      <div class="column-handle cursor-move mr-1 text-xs text-gray-400 hover:text-gray-600">
+        <i class="fa-solid fa-grip-vertical"></i>
+      </div>
+      
+      <div data-column-editor-target="display" class="flex items-center gap-2">
+        <h3 class="text-md text-center font-semibold"><%= column.name %></h3>
+        <button data-action="click->column-editor#showEdit" class="text-xs cursor-pointer">
+          <i class="fa-solid fa-pen-to-square text-md"></i>
+        </button>
+      </div>
+      
+      <%= form_with model: [column.board, column],
+              class: "hidden flex items-center gap-2",
+              data: { column_editor_target: "form", action: "focusout->column-editor#hideEdit" } do |f| %>
+
+        <%= f.text_field :name,
+                        class: "input input-sm input-bordered w-full",
+                        data: {
+                          column_editor_target: "input",
+                          action: "keydown->column-editor#handleKeydown focusout->column-editor#hideEdit"
+                        } %>
+
+        <button type="submit"
+                class="btn btn-sm btn-success">
+          <i class="fa-solid fa-check"></i>
+        </button>
+      <% end %>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <div class="dropdown dropdown-end">
+        <button tabindex="0" class="btn btn-ghost btn-xs" data-column-settings-target="settingsButton">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mr-[-100px]">
+          <li>
+            <div class="form-control">
+              <label class="label cursor-pointer">
+                <span class="label-text">Coluna Done</span>
+                <%= form_with model: [column.board, column], 
+                            class: "toggle-form",
+                            data: { turbo: "false", action: "change->column-settings#toggleDoneColumn" } do |f| %>
+                  <%= f.check_box :is_done_column, 
+                                class: "toggle toggle-primary", 
+                                checked: column.is_done_column,
+                                data: { column_settings_target: "doneToggle" } %>
+                <% end %>
+              </label>
+            </div>
+          </li>
+          <li>
+            <a href="#" data-action="click->column-settings#confirmDelete" class="text-error">
+              <i class="fa-solid fa-trash"></i> Excluir coluna
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <div data-column-editor-target="newTaskButton" class="badge transition-all cursor-pointer hover:shadow-md badge-primary text-slate-200 flex p-3 items-center rounded-sm">
+        <i class="fa-solid fa-plus"></i>
+        <p class="mb-1">tarefa</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="flex flex-col p-2 gap-2">
+    <%= render 'columns/task_card' %>
+  </div>
+  
+  <dialog id="delete_column_modal_<%= column.id %>" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Confirmar exclusão</h3>
+      <p class="py-4">
+        Tem certeza que deseja excluir a coluna "<%= column.name %>"?
+        <% if true %>
+          Todas as tarefas desta coluna também serão excluídas.
+        <% end %>
+      </p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-ghost">Cancelar</button>
+        </form>
+        <%= button_to [column.board, column], 
+                    method: :delete, 
+                    class: "btn btn-error",
+                    form: { data: { turbo_confirm: false } } do %>
+          Excluir
+        <% end %>
+      </div>
+    </div>
+  </dialog>
+</div>
