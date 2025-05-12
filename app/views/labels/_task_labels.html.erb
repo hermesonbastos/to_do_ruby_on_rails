@@ -1,0 +1,14 @@
+<div class="flex flex-wrap gap-2 mb-2">
+  <% task.labels.each do |label| %>
+    <div class="badge badge-<%= label.color %> flex items-center gap-1">
+      <span><%= label.title %></span>
+      <button type="button" 
+              class="ml-1 text-xs"
+              data-action="click->task-labels#removeLabel"
+              data-task-id="<%= task.id %>"
+              data-label-id="<%= label.id %>">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+  <% end %>
+</div>

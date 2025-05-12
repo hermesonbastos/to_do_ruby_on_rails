@@ -15,9 +15,9 @@ class Task < ApplicationRecord
   before_validation :set_position, on: :create
 
   DIFFICULTY_LABELS = {
-    1 => "Fácil",
-    2 => "Médio",
-    3 => "Difícil"
+    1 => "S",
+    2 => "M",
+    3 => "L"
   }
 
   def difficulty_label

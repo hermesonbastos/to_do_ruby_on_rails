@@ -9,6 +9,17 @@ Rails.application.routes.draw do
     resources :columns, only: %i[create update destroy] do
       patch :reorder, on: :collection
     end
+
+    resources :labels, only: [:index, :create]
+  end
+
+  resources :tasks do
+    resources :labels, only: [] do
+      member do
+        post :add_to_task
+        delete :remove_from_task
+      end
+    end
   end
 
   resources :columns, only: [] do
