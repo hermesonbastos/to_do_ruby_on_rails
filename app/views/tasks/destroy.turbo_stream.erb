@@ -1,0 +1,17 @@
+<%= turbo_stream.remove @task %>
+
+<% if @task.column.tasks.reload.none? %>
+  <%= turbo_stream.replace "column_#{@task.column.id}_tasks" do %>
+    <div class="flex flex-col p-2 gap-2 tasks-container"
+       id="column_<%= @column.id %>_tasks"
+       data-column-id="<%= @column.id %>"
+       data-controller="sortable"
+       data-sortable-group-value="tasks"
+       data-sortable-url-value="<%= reorder_column_tasks_path(@column) %>"
+       data-sortable-column-id-value="<%= @column.id %>">
+      <div id="no_tasks_text_<%= @task.column.id %>" class="text-center text-gray-400 py-4">
+        Sem tarefas
+      </div>
+    </div>
+  <% end %>
+<% end %>

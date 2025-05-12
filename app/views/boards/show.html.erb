@@ -47,23 +47,14 @@
     </div> 
   </div>
   
-  <div id="board-columns" 
-     class="flex gap-4 overflow-x-auto pb-4 w-full" 
-     data-controller="horizontal-scroll sortable-columns"
-     data-reorder-url="<%= reorder_board_columns_path(@board) %>"
-     style="scrollbar-width: thin;">
-    <%= render partial: 'columns/column', collection: @board.columns.order(:position) %>
-  
-    <div id="new-column-placeholder" data-column-creator-target="placeholder" class="hidden card relative shadow-sm bg-base-100 w-70 min-h-100 flex-shrink-0">
-      <div class="flex justify-between items-center p-3 pb-0">
-        <div class="flex items-center gap-2">
-          <div class="text-sm text-center font-semibold">Nova coluna</div>
-        </div>
-      </div>
-      
-      <div class="flex flex-col p-2 gap-2">
-        <%= render 'columns/task_card' %>
-      </div>
+  <turbo-frame id="board-columns-frame">
+    <div id="board-columns" 
+      class="flex gap-4 overflow-x-auto pb-4 w-full" 
+      data-controller="horizontal-scroll sortable"
+      data-sortable-group-value="columns"
+      data-sortable-reorder-url-value="<%= reorder_board_columns_path(@board) %>"
+      style="scrollbar-width: thin;">
+      <%= render partial: 'columns/column', collection: @board.columns.order(:position) %>
     </div>
-  </div>
+  </turbo-frame>
 </div>

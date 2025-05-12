@@ -1,0 +1,54 @@
+<div id="<%= dom_id(task) %>" 
+     data-task-id="<%= task.id %>"
+     class="p-4 rounded-md bg-base-300 shadow-sm transition hover:cursor-pointer border border-base-200 hover:shadow-md hover:border-base-300 relative task-card task"
+     data-controller="task-actions"
+     data-action="click->task-actions#showTask">
+  
+  <button class="absolute top-3 right-3 text-sm text-gray-500 hover:text-error" 
+          data-action="click->task-actions#confirmDelete click->task-actions#stopPropagation">
+    <i class="fa-solid fa-trash"></i>
+  </button>
+  
+  <div>
+    <p class="font-semibold text-lg"><%= task.title %></p>
+    <% if task.due_date.present? %>
+      <p class="text-xs mt-1">
+        <i class="fa-regular fa-calendar"></i> <%= task.due_date_formatted %>
+      </p>
+    <% end %>
+    <div class="flex justify-between items-center mt-3">
+      <span class="badge badge-sm <%= task_difficulty_class(task.difficulty) %>">
+        <%= task.difficulty_label %>
+      </span>
+    </div>
+  </div>
+  
+  <dialog
+    id="delete_task_modal_<%= task.id %>"
+    class="modal"
+    data-controller="modal"
+    data-action="turbo:submit-end->modal#afterSubmit"
+  >
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Confirmar exclusão</h3>
+      <p class="py-4">
+        Tem certeza que deseja excluir a tarefa "<%= task.title %>"?
+      </p>
+      <div class="modal-action">
+        <button
+          type="button"
+          class="btn btn-ghost"
+          data-action="modal#cancel"
+        >
+          Cancelar
+        </button>
+        <%= button_to [task.column, task],
+            method: :delete,
+            class: "btn btn-error",
+            form: { data: { turbo_confirm: "" } } do %>
+          Excluir
+        <% end %>
+      </div>
+    </div>
+  </dialog>
+</div>

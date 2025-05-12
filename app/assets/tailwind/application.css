@@ -138,6 +138,28 @@
   min-width: 200px;
 }
 
+.task-card {
+  cursor: pointer;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+.sortable-ghost.task-card {
+  opacity: 0.5;
+  background-color: #f0f0f0;
+}
+
+.sortable-chosen.task-card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sortable-drag.task-card {
+  opacity: 0.8;
+}
+
 @plugin "daisyui" {
   themes: cupcake, synthwave, black, business, night, coffee, abyss, nord;
 }

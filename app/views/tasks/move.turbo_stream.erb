@@ -1,0 +1,17 @@
+<%= turbo_stream.remove @task %>
+
+<% if @old_column.tasks.reload.none? %>
+  <%= turbo_stream.append "column_#{@old_column.id}_tasks" do %>
+    <div id="no_tasks_text_<%= @old_column.id %>" class="text-center text-gray-400 py-4">
+      Sem tarefas
+    </div>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.append "column_#{@new_column.id}_tasks" do %>
+  <%= render partial: "tasks/task", locals: { task: @task } %>
+<% end %>
+
+<% if @new_column.tasks.count == 1 %>
+  <%= turbo_stream.remove "no_tasks_text_#{@new_column.id}" %>
+<% end %>

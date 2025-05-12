@@ -1,12 +1,17 @@
-<div id="<%= dom_id(column) %>" 
-     data-column-id="<%= column.id %>"
-     class="card relative shadow-sm bg-base-100 w-70 min-h-100 flex-shrink-0 <%= 'border border-green-300' if column.is_done_column %>" 
-     data-controller="column-editor column-settings">
+<div
+  id="<%= dom_id(column) %>" 
+  data-column-id="<%= column.id %>"
+  class="card column relative shadow-sm bg-base-100 w-70 min-h-100 flex-shrink-0 <%= 'border border-green-300' if column.is_done_column %>" 
+  data-controller="column-editor column-settings"
+  data-column-settings-board-id-value="<%= column.board_id %>"
+  data-column-settings-column-id-value="<%= column.id %>"
+  data-column-settings-current-position-value="<%= column.position %>"
+>
   <div class="flex justify-between items-center p-3 pb-0">
     <div class="flex items-center gap-2">
-      <div class="column-handle cursor-move mr-1 text-xs text-gray-400 hover:text-gray-600">
+      <!--<div class="column-handle cursor-move mr-1 text-xs text-gray-400 hover:text-gray-600">
         <i class="fa-solid fa-grip-vertical"></i>
-      </div>
+      </div> -->
       
       <div data-column-editor-target="display" class="flex items-center gap-2">
         <h3 class="text-md text-center font-semibold"><%= column.name %></h3>
@@ -54,6 +59,17 @@
               </label>
             </div>
           </li>
+          <%# <li>
+            <a href="#"
+              data-action="click->column-settings#togglePositionDropdown"
+              class="justify-between">
+              Posição
+              <i class="fa-solid fa-angle-right"></i>
+            </a>
+            <ul data-column-settings-target="positionMenu"
+                class="menu dropdown-content bg-base-100 p-2 rounded-box shadow absolute left-20 top-0 hidden">
+            </ul>
+          </li> %>
           <li>
             <a href="#" data-action="click->column-settings#confirmDelete" class="text-error">
               <i class="fa-solid fa-trash"></i> Excluir coluna
@@ -62,24 +78,38 @@
         </ul>
       </div>
       
-      <div data-column-editor-target="newTaskButton" class="badge transition-all cursor-pointer hover:shadow-md badge-primary text-slate-200 flex p-3 items-center rounded-sm">
+      <button data-action="click->column-settings#showNewTaskModal" 
+              data-column-editor-target="newTaskButton" 
+              class="badge transition-all cursor-pointer hover:shadow-md badge-primary text-slate-200 flex p-3 items-center rounded-sm">
         <i class="fa-solid fa-plus"></i>
         <p class="mb-1">tarefa</p>
-      </div>
+      </button>
     </div>
   </div>
   
-  <div class="flex flex-col p-2 gap-2">
-    <%= render 'columns/task_card' %>
-  </div>
+  <div class="flex flex-col p-2 gap-2 tasks-container" 
+     id="column_<%= column.id %>_tasks"
+     data-column-id="<%= column.id %>"
+     data-controller="sortable"
+     data-sortable-group-value="tasks"
+     data-sortable-url-value="<%= reorder_column_tasks_path(column) %>"
+     data-sortable-column-id-value="<%= column.id %>">
+  <% if column.tasks.any? %>
+    <%= render partial: 'tasks/task', collection: column.tasks.order(:position) %>
+  <% else %>
+    <div id="no_tasks_text_<%= column.id %>" class="text-center text-gray-400 py-4">
+      Sem tarefas
+    </div>
+  <% end %>
+</div>
   
   <dialog id="delete_column_modal_<%= column.id %>" class="modal">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Confirmar exclusão</h3>
       <p class="py-4">
         Tem certeza que deseja excluir a coluna "<%= column.name %>"?
-        <% if true %>
-          Todas as tarefas desta coluna também serão excluídas.
+        <% if column.tasks.any? %>
+          Todas as <%= column.tasks.count %> tarefas desta coluna também serão excluídas.
         <% end %>
       </p>
       <div class="modal-action">
@@ -93,6 +123,19 @@
           Excluir
         <% end %>
       </div>
+    </div>
+  </dialog>
+  
+  <dialog
+    id="new_task_modal_<%= column.id %>"
+    class="modal"
+    data-controller="modal"
+    data-action="turbo:submit-end->modal#afterSubmit"
+  >
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Nova tarefa</h3>
+      <div id="new_task_errors"></div>
+      <%= render 'tasks/form', column: column, task: Task.new %>
     </div>
   </dialog>
 </div>
