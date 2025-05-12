@@ -1,0 +1,5 @@
+<%= turbo_stream.replace @task do %>
+  <%= render partial: "tasks/task", locals: { task: @task } %>
+<% end %>
+
+<%= turbo_stream.update "task_modal_container", "" %>

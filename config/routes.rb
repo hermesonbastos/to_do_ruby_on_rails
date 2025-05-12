@@ -10,4 +10,15 @@ Rails.application.routes.draw do
       patch :reorder, on: :collection
     end
   end
+
+  resources :columns, only: [] do
+    resources :tasks, only: %i[create show update destroy] do
+      collection do
+        patch :reorder
+      end
+      member do
+        patch :move
+      end
+    end
+  end
 end
