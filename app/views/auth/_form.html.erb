@@ -43,5 +43,12 @@
           end,
           class: "btn btn-primary w-full"
         ) %>
+    <%= button_to "Entrar com Google",
+        "/auth/google_oauth2",
+        method: :post,
+        data: {
+          turbo: "false"
+        },
+        class: "btn btn-primary" %>
   </div>
 <% end %>
