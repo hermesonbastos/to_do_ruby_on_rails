@@ -36,14 +36,6 @@ class ColumnsController < ApplicationController
     end
   end
 
-  def reorder
-    params[:column_ids].each_with_index do |id, index|
-      Column.where(id: id).update_all(position: index)
-    end
-
-    head :ok
-  end
-
   private
 
   def set_board

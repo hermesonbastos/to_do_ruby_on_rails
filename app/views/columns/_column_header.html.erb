@@ -1,0 +1,46 @@
+<div class="flex justify-between items-center p-3 pb-0">
+  <div class="flex items-center gap-2">
+    <%= render 'columns/column_editor', column: column %>
+  </div>
+  
+  <div class="flex items-center gap-2">
+    <div class="dropdown dropdown-end">
+        <button tabindex="0" class="btn btn-ghost btn-xs" data-column-settings-target="settingsButton">
+            <i class="fa-solid fa-gear"></i>
+        </button>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mr-[-100px]">
+            <li>
+            <div class="form-control">
+                <label class="label cursor-pointer">
+                <span class="label-text">Coluna Done</span>
+                <%= form_with model: [column.board, column], 
+                            class: "toggle-form",
+                            data: { turbo: "false", action: "change->column-settings#toggleDoneColumn" } do |f| %>
+                    <%= f.check_box :is_done_column, 
+                                class: "toggle toggle-primary", 
+                                checked: column.is_done_column,
+                                data: { column_settings_target: "doneToggle" } %>
+                <% end %>
+                </label>
+            </div>
+            </li>
+            <li>
+            <a href="#" data-action="click->column-settings#confirmDelete" class="text-error">
+                <i class="fa-solid fa-trash"></i> Excluir coluna
+            </a>
+            </li>
+        </ul>
+    </div>
+    
+    <button
+      data-action="click->column-settings#showNewTaskModal"
+      data-modal-target="modal"
+      data-modal-id-param="new_task_modal_<%= column.id %>"
+      data-column-editor-target="newTaskButton" 
+      class="badge transition-all cursor-pointer hover:shadow-md badge-primary text-slate-200 flex p-3 items-center rounded-sm"
+    >
+      <i class="fa-solid fa-plus"></i>
+      <p class="mb-1">tarefa</p>
+    </button>
+  </div>
+</div>

@@ -4,6 +4,7 @@ class BoardsController < ApplicationController
   def index
     @boards = current_user.boards.order(created_at: :desc)
     @board = Board.new
+    @columns = @board.columns.order(:position)
   end
 
   def show

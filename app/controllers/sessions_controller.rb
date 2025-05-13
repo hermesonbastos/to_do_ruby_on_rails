@@ -1,7 +1,4 @@
 class SessionsController < ApplicationController
-  def new
-  end
-
   def create
     user = User.find_by(email: params[:session][:email].downcase)
 
@@ -15,7 +12,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session.delete(:user_id)
-    redirect_to login_path, notice: "Você foi desconectado."
+    reset_session
+    redirect_to auth_path, notice: "Você foi desconectado."
   end
 end

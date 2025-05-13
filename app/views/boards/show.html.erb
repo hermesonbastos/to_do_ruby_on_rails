@@ -51,8 +51,6 @@
     <div id="board-columns" 
       class="flex gap-4 overflow-x-auto pb-4 w-full" 
       data-controller="horizontal-scroll sortable"
-      data-sortable-group-value="columns"
-      data-sortable-reorder-url-value="<%= reorder_board_columns_path(@board) %>"
       style="scrollbar-width: thin;">
       <%= render partial: 'columns/column', collection: @board.columns.order(:position) %>
     </div>

@@ -5,44 +5,44 @@ class AuthController < ApplicationController
   end
 
   def create
+    auth_service = AuthService.new(session)
+    
     case params[:step]
     when "email"
-      email = params[:auth][:email].downcase
-      session[:auth_email] = email
-
-      if User.exists?(email:)
+      result = auth_service.process_email_step(params[:auth][:email])
+      
+      if result[:redirect_to] == :password
         redirect_to auth_path(step: "password")
       else
-        @user = User.new(email:)
+        @user = result[:user]
         @step = "register"
         render :new, status: :unprocessable_entity
       end
-
+      
     when "password"
-      user = User.find_by(email: session[:auth_email])
-      if user&.authenticate(params[:auth][:password])
-        login!(user)
+      result = auth_service.process_password_step(params[:auth][:password])
+      
+      if result[:redirect_to]
+        login!(result)
       else
-        flash.now[:alert] = "Senha inválida."
+        flash.now[:alert] = result[:alert]
         @step = "password"
         render :new, status: :unprocessable_entity
       end
-
+      
     when "register"
-      @user = User.new(user_params.merge(email: session[:auth_email]))
-      if @user.save
-        login!(@user)
+      result = auth_service.process_register_step(user_params)
+      
+      if result[:redirect_to]
+        login!(result)
       else
+        @user = result[:user]
         @step = "register"
         render :new, status: :unprocessable_entity
       end
     end
   end
 
-  def destroy
-    reset_session
-    redirect_to auth_path, notice: "Você saiu da sua conta."
-  end
 
   private
 
@@ -50,9 +50,7 @@ class AuthController < ApplicationController
     params.require(:auth).permit(:name, :password, :password_confirmation)
   end
 
-  def login!(user)
-    session[:user_id] = user.id
-    session.delete(:auth_email)
-    redirect_to boards_path, notice: "Login efetuado com sucesso."
+  def login!(result)
+    redirect_to boards_path, notice: result[:notice]
   end
 end

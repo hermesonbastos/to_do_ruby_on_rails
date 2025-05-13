@@ -7,7 +7,6 @@ export default class extends Controller {
   connect() {
     console.log("Task Labels Controller conectado");
     
-    // Adiciona event listeners para os seletores de cor
     document.querySelectorAll('.badge-color-selector').forEach(badge => {
       badge.addEventListener('click', () => {
         const radio = badge.previousElementSibling;
@@ -93,17 +92,15 @@ export default class extends Controller {
       }
     })
   }
-createLabel(event) {
+
+  createLabel(event) {
     event.preventDefault();
     
     const form = this.newLabelFormTarget.querySelector('form');
     console.log(form)
-    // Obter task_id do elemento HTML ou do data attribute
-    // Podemos obter isso do formulário ou de um elemento oculto
     const taskIdElement = form.querySelector('input[name="task_id"]');
     const taskId = taskIdElement ? taskIdElement.value : form.dataset.taskId;
     
-    // Obter board_id do URL atual
     const urlParts = window.location.pathname.split('/');
     const boardIdIndex = urlParts.indexOf('boards') + 1;
     const boardId = urlParts[boardIdIndex];
@@ -115,14 +112,11 @@ createLabel(event) {
       return;
     }
     
-    // Obter os dados do formulário
     const formData = new FormData(form);
     formData.append('task_id', taskId);
     
-    // Obter o token CSRF
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     
-    // Fazer a requisição AJAX
     fetch(`/boards/${boardId}/labels`, {
       method: 'POST',
       headers: {
@@ -134,20 +128,15 @@ createLabel(event) {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Limpar o formulário
         form.reset();
         
-        // Esconder o formulário e mostrar a lista de etiquetas disponíveis
         this.newLabelFormTarget.classList.add("hidden");
         this.availableLabelsListTarget.classList.remove("hidden");
         
-        // Atualizar a lista de etiquetas da tarefa
         this.updateTaskLabels(data.task_id, data.task_labels_html);
         
-        // Atualizar a lista de etiquetas disponíveis
         this.updateAvailableLabels(data.task_id, data.available_labels_html);
       } else {
-        // Exibir erros
         alert(data.errors.join(', '));
       }
     })
@@ -158,7 +147,6 @@ createLabel(event) {
   }
   
 updateTaskLabels(taskId, html) {
-  // Corrija o seletor para corresponder ao ID no seu HTML
   const taskLabelsContainer = document.getElementById(`task_labels_${taskId}`);
   if (taskLabelsContainer) {
     taskLabelsContainer.innerHTML = html;

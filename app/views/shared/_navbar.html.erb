@@ -1,8 +1,9 @@
 <div class="navbar bg-base-100 shadow-sm rounded-lg px-4">
   <div class="navbar-start">
-    <%= link_to boards_path, class: "btn btn-ghost flex items-center gap-1 mb-4" do %>
-      <i class="fa-solid fa-arrow-left text-lg"></i>
-
+    <% unless controller_name == "boards" && action_name == "index" %>
+      <%= link_to boards_path, class: "btn btn-ghost flex items-center gap-1" do %>
+        <i class="fa-solid fa-arrow-left text-lg"></i>
+      <% end %>
     <% end %>
   </div>
   <div class="navbar-center">
@@ -54,7 +55,9 @@
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow right-2">
         <li><a>Editar Perfil (soon)</a></li>
-        <li><a>Logout (soon)</a></li>
+        <li>
+          <%= link_to "Sair", logout_path, method: :delete, "data-turbo-method": :delete %>
+        </li>
       </ul>
     </div>
     

@@ -42,7 +42,7 @@ export default class extends Controller {
       if (event.from !== event.to) {
         this.moveTask(event)
       } else {
-        this.reorderTasks()
+       // this.reorderTasks()
       }
     }
   }
@@ -60,32 +60,43 @@ export default class extends Controller {
     })
   }
 
-  reorderTasks() {
-    const ids = Array.from(this.element.querySelectorAll(".task-card"))
-      .map(el => el.dataset.taskId)
-    if (!ids.length) return
+  // reorderTasks() {
+  //   const ids = Array.from(this.element.querySelectorAll(".task-card"))
+  //     .map(el => el.dataset.taskId)
+  //   if (!ids.length) return
 
-    fetch(this.urlValue, {
-      method: "PATCH",
-      headers: this._headers(),
-      body: JSON.stringify({ task_ids: ids })
-    })
-  }
+  //   fetch(this.urlValue, {
+  //     method: "PATCH",
+  //     headers: this._headers(),
+  //     body: JSON.stringify({ task_ids: ids })
+  //   })
+  // }
 
   moveTask(event) {
     const taskId = event.item.dataset.taskId
     const targetColumnId = event.to.dataset.columnId
-
+    
+    const noTasksElement = document.getElementById(`no_tasks_text_${targetColumnId}`)
+    const tasks = Array.from(event.to.querySelectorAll('.task-card'))
+    const newPosition = tasks.indexOf(event.item)
+  
+    if (noTasksElement) {
+      noTasksElement.style.display = 'none'
+    }
+  
     fetch(`/columns/${this.columnIdValue}/tasks/${taskId}/move`, {
       method: "PATCH",
-      headers: {
-        ...this._headers(),
-        "Accept": "text/vnd.turbo-stream.html"
-      },
-      body: JSON.stringify({ target_column_id: targetColumnId })
+      headers: this._headers(),
+      body: JSON.stringify({ target_column_id: targetColumnId, newPosition: newPosition })
     })
-    .then(r => r.text())
-    .then(html => Turbo.renderStreamMessage(html))
+    .then(response => {
+      if (!response.ok) {
+        console.error("Error moving task")
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error)
+    })
   }
 
   _headers() {

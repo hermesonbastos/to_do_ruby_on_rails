@@ -11,8 +11,8 @@ class Task < ApplicationRecord
                 less_than_or_equal_to: 3
               }
   validates :position, presence: true, numericality: { only_integer: true }
-
-  before_validation :set_position, on: :create
+  default_scope { order(position: :asc) }
+  before_create :set_position_if_nil
 
   DIFFICULTY_LABELS = {
     1 => "S",
@@ -30,9 +30,11 @@ class Task < ApplicationRecord
 
   private
 
-  def set_position
+  def set_position_if_nil
     return if position.present?
-    max_position = column.tasks.maximum(:position)
-    self.position = (max_position || -1) + 1
+    
+    max_position = column.tasks.maximum(:position) || -1
+    self.position = max_position + 1
   end
 end
+

@@ -1,0 +1,21 @@
+<div id="delete_column_modal_<%= column.id %>" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Confirmar exclusão</h3>
+    <p class="py-4">
+      Tem certeza que deseja excluir a coluna "<%= column.name %>"?
+      <% if column.tasks.any? %>
+        Todas as <%= column.tasks.count %> tarefas desta coluna também serão excluídas.
+      <% end %>
+    </p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn btn-ghost" data-action="click->column-settings#close">Cancelar</button>
+      </form>
+      <%= button_to [column.board, column], 
+                  method: :delete, 
+                  class: "btn btn-error" do %>
+        Excluir
+      <% end %>
+    </div>
+  </div>
+</div>

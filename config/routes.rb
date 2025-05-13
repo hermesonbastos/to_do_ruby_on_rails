@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       patch :reorder, on: :collection
     end
 
-    resources :labels, only: [:index, :create]
+    resources :labels, only: [ :index, :create ]
   end
 
   resources :tasks do
