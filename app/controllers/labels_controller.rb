@@ -19,21 +19,21 @@ class LabelsController < ApplicationController
 
     if @label.save
       @task.labels << @label if @task.present?
-      
+
       task_labels_html = render_to_string(
-        partial: 'tasks/labels', 
+        partial: "tasks/labels",
         locals: { task: @task },
-        formats: [:html],
+        formats: [ :html ],
         layout: false
       )
-      
+
       available_labels_html = render_to_string(
-        partial: 'labels/available_labels',
+        partial: "labels/available_labels",
         locals: { board: @board, task: @task },
-        formats: [:html],
+        formats: [ :html ],
         layout: false
       )
-      
+
       render json: {
         success: true,
         task_id: @task.id,
