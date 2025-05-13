@@ -15,23 +15,38 @@ export default class extends Controller {
 
   confirmDelete(event) {
     event.preventDefault()
+    const columnId = this.element.dataset.columnId
+    const modal = document.getElementById(`delete_column_modal_${columnId}`)
+    if (!modal) return
+
+    // adiciona a classe que mostra o modal
+    modal.classList.add("modal-open")
+  }
+
+  
+  close(event) {
+        event.preventDefault();
+
+    console.log("dsaodsaddsa")
     
     const columnId = this.element.dataset.columnId
-    
+        console.log(columnId)
+
+    console.log(document)
     const modal = document.getElementById(`delete_column_modal_${columnId}`)
-    if (modal) {
-      modal.showModal()
-    }
+   modal.classList.remove('modal-open');
+
   }
-  
+
   showNewTaskModal(event) {
     event.preventDefault()
     
     const columnId = this.element.dataset.columnId
-    
+    console.log("aaaa")
     const modal = document.getElementById(`new_task_modal_${columnId}`)
-    if (modal) {
-      modal.showModal()
-    }
+      if (!modal) return
+
+    // adiciona a classe que mostra o modal
+    modal.classList.add("modal-open")
   }
 }

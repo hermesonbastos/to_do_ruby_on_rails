@@ -1,70 +1,15 @@
-<%= turbo_stream.update "task_modal_container" do %>
-  <dialog
+<%= turbo_stream.append "task_modal_container" do %>
+  <div
     id="task_modal_<%= @task.id %>"
     class="modal modal-open"
     data-controller="modal"
+    data-modal-remove-on-close="true"
     data-action="turbo:submit-end->modal#afterSubmit"
   >
-    <div class="modal-box">
+    <div class="modal-box w-11/12 max-w-5xl">
       <h3 class="font-bold text-lg">Editar tarefa</h3>
       <div id="edit_task_errors"></div>
-      <%= form_with model: [@column, @task], class: "mt-4" do |f| %>
-        <div class="form-control mb-4">
-          <%= f.label :title, "Título", class: "label" %>
-          <%= f.text_field :title, class: "input input-bordered w-full", placeholder: "Título da tarefa" %>
-        </div>
-        
-        <div class="form-control mb-4">
-          <%= f.label :description, "Descrição", class: "label" %>
-          <%= f.text_area :description, class: "textarea textarea-bordered w-full", placeholder: "Descrição da tarefa", rows: 3 %>
-        </div>
-        
-        <div class="form-control mb-4">
-          <%= f.label :difficulty, "Dificuldade", class: "label" %>
-          <div class="flex gap-4">
-            <% Task::DIFFICULTY_LABELS.each do |value, label| %>
-              <label class="label cursor-pointer gap-2">
-                <%= f.radio_button :difficulty, value, class: "radio radio-primary" %>
-                <span class="label-text"><%= label %></span>
-              </label>
-            <% end %>
-          </div>
-        </div>
-        
-        <div class="form-control mb-4">
-          <%= f.label :due_date, "Data de vencimento", class: "label" %>
-          <div class="flex gap-2">
-            <%= f.date_field :due_date, class: "input input-bordered w-full" %>
-            <%= f.time_field :due_date, class: "input input-bordered w-full" %>
-          </div>
-        </div>
-        
-        <div class="flex gap-2 justify-end">
-          <form
-            action="<%= column_task_path(@column, @task) %>"
-            method="post"
-            data-turbo-confirm=""
-            class="inline"
-          >
-            <input type="hidden" name="_method" value="delete">
-            <button class="btn btn-ghost btn-error" type="submit">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          </form>
-
-          <button
-            type="button"
-            class="btn btn-ghost"
-            data-action="click->modal#cancel"
-          >
-            Cancelar
-          </button>
-
-          <div class="form-control">
-            <%= f.submit "Salvar", class: "btn btn-primary" %>
-          </div>
-        </div>
-      <% end %>
+      <%= render 'tasks/form', column: @column, task: @task %>
     </div>
-  </dialog>
+  </div>
 <% end %>

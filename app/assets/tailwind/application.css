@@ -92,12 +92,13 @@
 
 @media (max-width: 1250px) {
   .full-width-container {
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .full-width-container {
     padding-left: .5rem;
     padding-right: .5rem;
   }
@@ -158,6 +159,20 @@
 
 .sortable-drag.task-card {
   opacity: 0.8;
+}
+
+.badge-color-selector {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.badge-color-selector:hover {
+  transform: scale(1.05);
+}
+
+input[type="radio"]:checked + .badge-color-selector {
+  outline: 2px solid white;
+  transform: scale(1.1);
 }
 
 @plugin "daisyui" {

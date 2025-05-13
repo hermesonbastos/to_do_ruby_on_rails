@@ -1,0 +1,18 @@
+<% available_labels = board.labels.where.not(id: task.labels.pluck(:id)) %>
+
+<% if available_labels.any? %>
+  <div class="flex flex-wrap gap-1">
+    <% available_labels.each do |label| %>
+      <button type="button"
+              class="badge badge-<%= label.color %> flex items-center justify-between p-2 cursor-pointer"
+              data-action="click->task-labels#addLabel"
+              data-task-id="<%= task.id %>"
+              data-label-id="<%= label.id %>">
+        <%= label.title %>
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-gray-400 text-sm">Sem etiquetas disponíveis</p>
+<% end %>

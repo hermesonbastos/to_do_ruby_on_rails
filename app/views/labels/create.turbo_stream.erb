@@ -1,0 +1,14 @@
+<%= turbo_stream.append "available_labels_#{params[:task_id]}" do %>
+  <button type="button"
+          class="badge badge-<%= @label.color %> flex items-center justify-between p-2 cursor-pointer"
+          data-action="click->task-labels#addLabel"
+          data-task-id="<%= params[:task_id] %>"
+          data-label-id="<%= @label.id %>">
+    <%= @label.title %>
+    <i class="fa-solid fa-plus"></i>
+  </button>
+<% end %>
+
+<%= turbo_stream.replace "new_label_form" do %>
+  <div id="new_label_form"></div>
+<% end %>

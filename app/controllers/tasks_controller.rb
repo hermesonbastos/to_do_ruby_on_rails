@@ -7,6 +7,10 @@ class TasksController < ApplicationController
     @task = @column.tasks.build(task_params)
 
     if @task.save
+      if params[:task][:label_ids].present?
+        @task.label_ids = params[:task][:label_ids]
+      end
+
       respond_to do |format|
         format.html { redirect_to board_path(@column.board) }
         format.turbo_stream
@@ -85,6 +89,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :difficulty, :due_date, :position)
+    params.require(:task).permit(:title, :description, :difficulty, :due_date, :position, label_ids: [])
   end
 end

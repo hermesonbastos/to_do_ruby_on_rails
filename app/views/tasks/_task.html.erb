@@ -16,6 +16,15 @@
         <i class="fa-regular fa-calendar"></i> <%= task.due_date_formatted %>
       </p>
     <% end %>
+    
+    <% if task.labels.any? %>
+      <div class="flex flex-wrap gap-1 mt-2">
+        <% task.labels.each do |label| %>
+          <span class="badge badge-<%= label.color %> badge-sm"><%= label.title %></span>
+        <% end %>
+      </div>
+    <% end %>
+    
     <div class="flex justify-between items-center mt-3">
       <span class="badge badge-sm <%= task_difficulty_class(task.difficulty) %>">
         <%= task.difficulty_label %>
