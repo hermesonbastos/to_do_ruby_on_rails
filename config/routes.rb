@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: redirect("/auth")
+
   get    "/auth",   to: "auth#new",     as: :auth
   post   "/auth",   to: "auth#create"
   delete "/logout", to: "auth#destroy", as: :logout
