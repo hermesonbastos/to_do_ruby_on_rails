@@ -1,0 +1,64 @@
+<%= turbo_stream.update "label_selector_#{params[:task_id]}" do %>
+  <div class="bg-base-200 p-3 rounded-md" data-controller="task-labels">
+    
+    <div data-task-labels-target="availableLabelsList">
+      <h5 class="font-semibold mb-2">Etiquetas disponíveis</h5>
+
+      <div class="max-h-40 overflow-y-auto mb-3"
+          id="available_labels_<%= @task.id %>">
+        <%= render partial: "labels/available_labels",
+                  locals: { board: @board, task: @task } %>
+      </div>
+
+      <div class="border-t pt-2">
+        <button type="button" 
+                class="text-sm text-primary flex items-center gap-1"
+                data-action="click->task-labels#showNewLabelForm"
+                data-task-labels-target="createButton">
+          <i class="fa-solid fa-plus"></i>
+          <span>Criar nova etiqueta</span>
+        </button>
+      </div>
+    </div>
+
+ <!-- Em app/views/labels/index.turbo_stream.erb -->
+<div class="hidden" data-task-labels-target="newLabelForm">
+  <h5 class="font-semibold mb-2">Nova etiqueta</h5>
+  
+  <!-- Formulário sem Turbo -->
+  <form id="new_label_form" class="new_label">
+    <input type="hidden" name="task_id" value="<%= @task.id %>">
+    <div class="form-control mb-2">
+      <input type="text" name="label[title]" class="input input-sm input-bordered w-full" placeholder="Nome da etiqueta">
+    </div>
+
+    <div class="form-control mb-2">
+      <label class="label">Cor</label>
+      <div class="flex flex-wrap gap-2">
+        <% %w[primary secondary accent info success warning error neutral].each do |color| %>
+          <label class="cursor-pointer">
+            <input type="radio" name="label[color]" value="<%= color %>" class="hidden">
+            <div class="badge rounded-full w-6 h-6 badge-<%= color %> p-2 badge-color-selector"></div>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex justify-between">
+      <button type="button"
+              class="btn btn-sm btn-ghost"
+              data-action="click->task-labels#cancelNewLabelForm">
+        Cancelar
+      </button>
+
+      <button type="button" 
+              class="btn btn-sm btn-primary"
+              data-action="click->task-labels#createLabel">
+        Criar
+      </button>
+    </div>
+  </form>
+</div>
+
+  </div>
+<% end %>

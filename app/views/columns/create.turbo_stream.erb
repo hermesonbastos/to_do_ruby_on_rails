@@ -1,0 +1,7 @@
+<%= turbo_stream.append "board-columns" do %>
+  <%= render partial: "columns/column", locals: { column: @column } %>
+<% end %>
+
+<% if @column.is_done_column && @board.columns.where(is_done_column: true).count == 1 %>
+  <%= turbo_stream.remove "done-column-alert" %>
+<% end %>

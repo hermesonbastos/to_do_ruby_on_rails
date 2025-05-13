@@ -1,0 +1,17 @@
+<div class="card h-48 bg-base-100 shadow-sm flex-1 md:min-w-[30%] md:max-w-[30%]
+            transition hover:cursor-pointer hover:shadow-lg">
+  <figure class="h-18 overflow-hidden">
+    <% if board.banner.present? %>
+      <img src="data:image/*;base64,<%= board.banner %>" alt="<%= board.name %>" class="w-full h-full object-cover">
+    <% else %>
+      <%= image_tag "default_board_banner.webp", alt: board.name, class: "w-full h-full object-cover" %>
+    <% end %>
+</figure>
+  <div class="card-body">
+    <h2 class="card-title"><%= board.name %></h2>
+    <% if board.description.present? %>
+      <p><%= board.description %></p>
+    <% end %>
+  </div>
+  <%= link_to "", board_path(board), class: "absolute inset-0" %>
+</div>

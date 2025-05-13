@@ -1,0 +1,23 @@
+<div data-column-editor-target="display" class="flex items-center gap-2">
+  <h3 class="text-md text-center font-semibold"><%= column.name %></h3>
+  <button data-action="click->column-editor#showEdit" class="text-xs cursor-pointer">
+    <i class="fa-solid fa-pen-to-square text-md"></i>
+  </button>
+</div>
+
+<%= form_with model: [column.board, column],
+        class: "hidden flex items-center gap-2",
+        data: { column_editor_target: "form", action: "focusout->column-editor#hideEdit" } do |f| %>
+
+  <%= f.text_field :name,
+                  class: "input input-sm input-bordered w-full",
+                  data: {
+                    column_editor_target: "input",
+                    action: "keydown->column-editor#handleKeydown focusout->column-editor#hideEdit"
+                  } %>
+
+  <button type="submit"
+          class="btn btn-sm btn-success">
+    <i class="fa-solid fa-check"></i>
+  </button>
+<% end %>

@@ -1,0 +1,19 @@
+<div class="flex flex-col p-2">
+  <% labels.each do |label| %>
+    <%= render 'labels/item', label: label %>
+  <% end %>
+
+  <button
+    type="button"
+    class="badge badge-outline badge-sm m-1 flex items-center justify-center"
+    data-action="click->labels#showNewForm"
+  >
+    <i class="fa fa-plus"></i>
+  </button>
+</div>
+
+<template id="new-label-form-template">
+  <%= render partial: 'labels/form', locals: { board: board } %>
+</template>
+
+<div data-labels-target="form"></div>

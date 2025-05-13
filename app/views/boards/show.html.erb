@@ -1,0 +1,58 @@
+<div class="full-width-container">
+  <%= render 'shared/navbar' %>
+  <div class="w-full h-32 md:h-40 lg:h-48 mb-6 pt-4 md:pt-6 overflow-hidden">
+    <% if @board.banner.present? %>
+      <img  src="data:image/*;base64,<%= @board.banner %>"
+            alt="<%= @board.name %>"
+            class="w-full h-full object-cover rounded-lg">
+    <% else %>
+      <%= image_tag "default_board_banner.webp",
+                    alt: @board.name,
+                    class: "w-full h-full object-cover rounded-lg" %>
+    <% end %>
+  </div>
+
+  <div class="px-2 w-full pb-8">
+    <div class="flex flex-col">
+      <div class="flex flex-col gap-4">
+        <div class="badge badge-neutral">
+          Criado em <%= @board.created_at.strftime("%d/%m/%Y") %>
+        </div>
+        <h1 class="text-3xl font-bold"><%= @board.name %></h1>
+        <% if @board.try(:description).present? %>
+          <p class="mb-6"><%= @board.description %></p>
+        <% end %>
+      </div>
+      
+      <div data-controller="column-creator">
+        <div id="column-creator-actions" data-column-creator-target="button" class="flex flex-col md:flex-row gap-4">
+          <button class="btn flex btn-accent gap-2" 
+                  data-action="click->column-creator#showForm"
+                  >
+            <i class="fa-solid fa-plus"></i>
+            <p>Nova coluna</p>
+          </button>
+          <% unless @board.columns.exists?(is_done_column: true) %>
+            <div id="done-column-alert" class="alert alert-outline alert-info shadow-sm px-3 py-2 text-sm gap-2">
+              <i class="fa-solid fa-circle-info"></i>
+              <span class="text-base-content">Defina a(s) coluna(s) de tarefas concluídas, isso nos ajuda a metrificar seus resultados.</span>
+            </div>
+          <% end %>
+        </div>
+        
+        <div class="hidden" data-column-creator-target="form">
+          <%= render 'columns/form', board: @board %>
+        </div>
+      </div>   
+    </div> 
+  </div>
+  
+  <turbo-frame id="board-columns-frame">
+    <div id="board-columns" 
+      class="flex gap-4 overflow-x-auto pb-4 w-full" 
+      data-controller="horizontal-scroll sortable"
+      style="scrollbar-width: thin;">
+      <%= render partial: 'columns/column', collection: @board.columns.order(:position) %>
+    </div>
+  </turbo-frame>
+</div>

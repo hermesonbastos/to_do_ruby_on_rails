@@ -1,0 +1,24 @@
+<div class="min-h-screen flex flex-col items-center justify-center">
+  <div class="card w-full max-w-md shadow-lg">
+    <div class="card-body flex flex-col gap-10">
+      <div class="flex flex-col items-center gap-4">
+        <p class="text-3xl font-bold text-center">ToDone</p>
+        <div class="flex flex-col items-center">
+          <p clas="text-center">Bem vindo(a) ao ToDone</p>
+          <p clas="text-center">Suas tarefas da maneira mais simples</p>
+        </div>
+      </div>
+      <div>
+        <% if flash[:alert] %>
+          <div class="alert alert-error mb-4"><%= flash[:alert] %></div>
+        <% end %>
+        <%= render 'form' %>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-end">
+    <a target="_blank" href="https://github.com/hermesonbastos">
+      <button class="btn btn-link">hermesonbastos</button>
+    </a>
+  </div>
+</div>

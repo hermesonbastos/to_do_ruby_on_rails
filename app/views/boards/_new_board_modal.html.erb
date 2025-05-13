@@ -1,0 +1,39 @@
+<input type="checkbox" id="new-board-modal" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box" data-controller="banner-preview">
+    <h3 class="font-bold text-lg mb-4">Novo quadro</h3>
+
+    <%= form_with model: @board, url: boards_path, local: true do |f| %>
+      <div class="form-control mb-4">
+        <label class="label"><span class="label-text">Nome</span></label>
+        <%= f.text_field :name, required: true, class: "input input-bordered w-full" %>
+      </div>
+
+      <div class="form-control mb-4">
+        <label class="label"><span class="label-text">Descrição (opcional)</span></label>
+        <%= f.text_area :description, rows: 3, class: "textarea textarea-bordered w-full" %>
+      </div>
+
+      <div class="form-control mb-6">
+        <label class="label"><span class="label-text">Banner (opcional)</span></label>
+
+        <img data-banner-preview-target="preview"
+             class="w-full h-32 object-cover mb-2 rounded hidden" />
+
+        <input type="file"
+               accept="image/*"
+               data-banner-preview-target="fileInput"
+               data-action="change->banner-preview#preview"
+               class="file-input file-input-bordered w-full" />
+
+        <%= f.hidden_field :banner,
+              data: { "banner-preview-target": "hidden" } %>
+      </div>
+
+      <div class="modal-action">
+        <label for="new-board-modal" class="btn btn-ghost">Cancelar</label>
+        <%= f.submit "Criar", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

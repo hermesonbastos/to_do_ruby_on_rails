@@ -1,0 +1,27 @@
+{
+  "name": "to-do",
+  "version": "1.0.0",
+  "description": "Para manter o histórico do projeto organizado, adotei o padrão [**Conventional Commits**](https://www.conventionalcommits.org/) pois é o que eu mais tive contato desde as minhas primeiras experiências e acho muito funcional pois consigo expressar com clareza o conteúdo de cada commit sem muito aprofundamento.",
+  "main": "postcss.config.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hermesonbastos/to_do_ruby_on_rails.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hermesonbastos/to_do_ruby_on_rails/issues"
+  },
+  "homepage": "https://github.com/hermesonbastos/to_do_ruby_on_rails#readme",
+  "dependencies": {
+    "daisyui": "^5.0.35"
+  }
+}

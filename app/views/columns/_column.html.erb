@@ -1,0 +1,19 @@
+<div
+  id="<%= dom_id(column) %>" 
+  data-column-id="<%= column.id %>"
+  class="card column relative shadow-sm bg-base-100 w-70 min-h-100 flex-shrink-0 <%= 'border border-green-300' if column.is_done_column %>" 
+  data-controller="column-editor column-settings"
+  data-column-settings-board-id-value="<%= column.board_id %>"
+  data-column-settings-column-id-value="<%= column.id %>"
+  data-column-settings-current-position-value="<%= column.position %>"
+>
+  <%= render 'columns/column_header', column: column %>
+  
+  <%= render 'tasks/tasks_container', column: column %>
+  
+  <%= render 'tasks/task_delete_modals', column: column %>
+  
+  <%= render 'columns/column_delete_modal', column: column %>
+  
+  <%= render 'tasks/task_new_modal', column: column %>
+</div>

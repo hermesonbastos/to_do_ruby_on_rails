@@ -1,0 +1,181 @@
+@import "tailwindcss";
+@source "../../../public/*.html";
+@source "../../../app/helpers/**/*.rb";
+@source "../../../app/javascript/**/*.js";
+@source "../../../app/views/**/*";
+
+@plugin "daisyui/theme" {
+  name: "custom360";
+  default: false;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(97.788% 0.004 56.375);
+  --color-base-200: oklch(93.982% 0.007 61.449);
+  --color-base-300: oklch(91.586% 0.006 53.44);
+  --color-base-content: oklch(23.574% 0.066 313.189);
+  --color-primary: oklch(49% 0.27 292.581);
+  --color-primary-content: oklch(93% 0.034 272.788);
+  --color-secondary: oklch(29% 0.149 302.717);
+  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-accent: oklch(70% 0.213 47.604);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(27% 0.006 286.033);
+  --color-neutral-content: oklch(92% 0.004 286.32);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "custom360dark";
+  default: false;
+  prefersdark: false;
+  color-scheme: "dark";
+  --color-base-100: oklch(28.822% 0.022 277.508);
+  --color-base-200: oklch(26.805% 0.02 277.508);
+  --color-base-300: oklch(24.787% 0.019 277.508);
+  --color-base-content: oklch(97.747% 0.007 106.545);
+  --color-primary: oklch(49% 0.27 292.581);
+  --color-primary-content: oklch(96% 0.018 272.314);
+  --color-secondary: oklch(29% 0.149 302.717);
+  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-accent: oklch(70% 0.213 47.604);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(39.445% 0.032 275.524);
+  --color-neutral-content: oklch(87.889% 0.006 275.524);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+.center-content {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.full-width-container {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: 16vw;
+  padding-right: 16vw;
+}
+
+@media (max-width: 1250px) {
+  .full-width-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .full-width-container {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+}
+
+#board-columns {
+  padding-bottom: 1rem;
+}
+
+.sortable-ghost {
+  opacity: 0.5;
+  background-color: #f0f0f0;
+}
+
+.sortable-chosen {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sortable-drag {
+  opacity: 0.8;
+}
+
+.column-handle {
+  cursor: grab;
+}
+
+.column-handle:active {
+  cursor: grabbing;
+}
+
+.toggle-form {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+.dropdown-content {
+  min-width: 200px;
+}
+
+.task-card {
+  cursor: pointer;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+.sortable-ghost.task-card {
+  opacity: 0.5;
+  background-color: #f0f0f0;
+}
+
+.sortable-chosen.task-card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sortable-drag.task-card {
+  opacity: 0.8;
+}
+
+.badge-color-selector {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.badge-color-selector:hover {
+  transform: scale(1.05);
+}
+
+input[type="radio"]:checked + .badge-color-selector {
+  outline: 2px solid white;
+  transform: scale(1.1);
+}
+
+@plugin "daisyui" {
+  themes: cupcake, synthwave, black, business, night, coffee, abyss, nord;
+}
+

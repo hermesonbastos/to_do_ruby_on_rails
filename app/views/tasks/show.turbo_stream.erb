@@ -1,0 +1,15 @@
+<%= turbo_stream.append "task_modal_container" do %>
+  <div
+    id="task_modal_<%= @task.id %>"
+    class="modal modal-open"
+    data-controller="modal"
+    data-modal-remove-on-close="true"
+    data-action="turbo:submit-end->modal#afterSubmit"
+  >
+    <div class="modal-box w-11/12 max-w-5xl">
+      <h3 class="font-bold text-lg">Editar tarefa</h3>
+      <div id="edit_task_errors"></div>
+      <%= render 'tasks/form', column: @column, task: @task %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,18 @@
+<div class="flex flex-wrap gap-1">
+  <% if task.labels.any? %>
+    <% task.labels.each do |label| %>
+      <div class="badge badge-<%= label.color %> flex items-center justify-between p-2">
+        <%= label.title %>
+        <button type="button"
+                class="ml-1"
+                data-action="click->task-labels#removeLabel"
+                data-task-id="<%= task.id %>"
+                data-label-id="<%= label.id %>">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="text-gray-400 text-sm">Sem etiquetas</p>
+  <% end %>
+</div>
