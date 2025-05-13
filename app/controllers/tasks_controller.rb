@@ -6,7 +6,15 @@ class TasksController < ApplicationController
     @task = @column.tasks.build(task_params)
 
     if @task.save
-      
+      if current_user.provider == "google_oauth2"
+        GoogleCalendarService.new(current_user).create_or_update_event_for_task(@task)
+      end
+
+      respond_to do |format|
+        format.html { redirect_to board_path(@column.board) }
+        format.turbo_stream
+      end
+
       respond_to do |format|
         format.html { redirect_to board_path(@column.board) }
         format.turbo_stream
@@ -27,6 +35,10 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      if current_user.provider == "google_oauth2"
+        GoogleCalendarService.new(current_user).create_or_update_event_for_task(@task)
+      end
+
       respond_to do |format|
         format.html { redirect_to board_path(@column.board) }
         format.turbo_stream
@@ -40,22 +52,18 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    if current_user.provider == "google_oauth2" && @task.google_event_id.present?
+      GoogleCalendarService.new(current_user).delete_event_for_task(@task)
+    end
+
     @task.destroy
     redirect_to board_path(@task.column.board)
   end
 
-  # def reorder
-  #   params[:task_ids].each_with_index do |id, index|
-  #     Task.where(id: id).update_all(position: index)
-  #   end
-
-  #   head :ok
-  # end
-
   def move
     @old_column = @task.column
     @new_column = Column.find(params[:target_column_id])
-  
+
     if @task.update(column: @new_column, position: params[:newPosition])   
       head :ok
     else

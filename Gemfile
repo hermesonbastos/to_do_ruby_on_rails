@@ -24,6 +24,14 @@ gem "jwt", "~> 2.6"
 
 gem "tailwindcss-rails"
 
+gem "omniauth"
+
+gem "omniauth-google-oauth2"
+
+gem "omniauth-rails_csrf_protection"
+
+gem "google-api-client", require: "google/apis/calendar_v3"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

@@ -11,4 +11,21 @@ class User < ApplicationRecord
   validates :profile_photo,
             length: { maximum: 1.megabyte },
             allow_nil: true
+
+  def self.from_omniauth(auth)
+    user = find_or_initialize_by(email: auth.info.email)
+
+    user.name = auth.info.name
+    user.provider = auth.provider
+    user.uid = auth.uid
+
+    user.token = auth.credentials.token
+    user.refresh_token = auth.credentials.refresh_token if auth.credentials.refresh_token.present?
+    user.token_expires_at = Time.at(auth.credentials.expires_at)
+
+    user.password = SecureRandom.hex(16) if user.new_record?
+
+    user.save
+    user
+  end
 end
