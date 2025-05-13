@@ -10,8 +10,18 @@ export default class extends Controller {
         "Accept": "text/vnd.turbo-stream.html"
       }
     })
-    .then(r => r.text())
-    .then(html => Turbo.renderStreamMessage(html))
+    .then(r => {
+        console.log("OIIIIII")
+        return r.text()
+      }
+    )
+    .then(html => 
+      {
+        console.log("OIIIIII")
+        console.log(html)
+        return Turbo.renderStreamMessage(html)
+      }
+      )
   }
   
   confirmDelete(event) {

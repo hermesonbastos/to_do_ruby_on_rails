@@ -1,3 +1,8 @@
 <%= turbo_stream.replace "task_labels_#{@task.id}" do %>
-  <%= render partial: "labels/task_labels", locals: { task: @task } %>
+  <%= render partial: "labels/task_labels_container", locals: { task: @task } %>
+<% end %>
+
+<%= turbo_stream.replace "available_labels_#{@task.id}" do %>
+  <%= render partial: "labels/available_labels",
+             locals: { board: @task.column.board, task: @task } %>
 <% end %>

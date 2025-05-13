@@ -23,6 +23,12 @@ export default class extends Controller {
     this.newTaskButtonTarget.classList.remove("hidden")
   }
 
+  cancel(event) {
+    event.preventDefault();
+    this.close();
+  }
+
+
   handleKeydown(event) {
     if (event.key === "Enter") {
       event.preventDefault()

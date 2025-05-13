@@ -4,24 +4,10 @@
     <div data-task-labels-target="availableLabelsList">
       <h5 class="font-semibold mb-2">Etiquetas disponíveis</h5>
 
-      <div class="max-h-40 overflow-y-auto mb-3">
-        <% available_labels = @board.labels.where.not(id: @task.labels.pluck(:id)) %>
-        <% if available_labels.any? %>
-          <div class="flex flex-wrap gap-1">
-            <% available_labels.each do |label| %>
-              <button type="button"
-                      class="badge badge-<%= label.color %> flex items-center justify-between p-2 cursor-pointer"
-                      data-action="click->task-labels#addLabel"
-                      data-task-id="<%= @task.id %>"
-                      data-label-id="<%= label.id %>">
-                <%= label.title %>
-                <i class="fa-solid fa-plus"></i>
-              </button>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-gray-400 text-sm">Sem etiquetas disponíveis</p>
-        <% end %>
+      <div class="max-h-40 overflow-y-auto mb-3"
+          id="available_labels_<%= @task.id %>">
+        <%= render partial: "labels/available_labels",
+                  locals: { board: @board, task: @task } %>
       </div>
 
       <div class="border-t pt-2">
@@ -35,42 +21,44 @@
       </div>
     </div>
 
-    <div class="hidden" data-task-labels-target="newLabelForm">
-      <h5 class="font-semibold mb-2">Nova etiqueta</h5>
-      <%= form_with model: Label.new,
-                    url: board_labels_path(@board),
-                    local: false,
-                    data: {
-                      action: "turbo:submit-end->task-labels#labelCreated",
-                      turbo_stream: true } do |f| %>
-
-        <div class="form-control mb-2">
-          <%= f.text_field :title, class: "input input-sm input-bordered w-full", placeholder: "Nome da etiqueta" %>
-        </div>
-
-        <div class="form-control mb-2">
-          <label class="label">Cor</label>
-          <div class="flex flex-wrap gap-2">
-            <% %w[primary secondary accent info success warning error neutral].each do |color| %>
-              <label class="cursor-pointer">
-                <%= f.radio_button :color, color, class: "hidden" %>
-                <div class="badge rounded-full w-6 h-6 badge-<%= color %> p-2 badge-color-selector"></div>
-              </label>
-            <% end %>
-          </div>
-        </div>
-
-        <div class="flex justify-between">
-          <button type="button"
-                  class="btn btn-sm btn-ghost"
-                  data-action="click->task-labels#cancelNewLabelForm">
-            Cancelar
-          </button>
-
-          <%= f.submit "Criar", class: "btn btn-sm btn-primary" %>
-        </div>
-      <% end %>
+ <!-- Em app/views/labels/index.turbo_stream.erb -->
+<div class="hidden" data-task-labels-target="newLabelForm">
+  <h5 class="font-semibold mb-2">Nova etiqueta</h5>
+  
+  <!-- Formulário sem Turbo -->
+  <form id="new_label_form" class="new_label">
+    <input type="hidden" name="task_id" value="<%= @task.id %>">
+    <div class="form-control mb-2">
+      <input type="text" name="label[title]" class="input input-sm input-bordered w-full" placeholder="Nome da etiqueta">
     </div>
+
+    <div class="form-control mb-2">
+      <label class="label">Cor</label>
+      <div class="flex flex-wrap gap-2">
+        <% %w[primary secondary accent info success warning error neutral].each do |color| %>
+          <label class="cursor-pointer">
+            <input type="radio" name="label[color]" value="<%= color %>" class="hidden">
+            <div class="badge rounded-full w-6 h-6 badge-<%= color %> p-2 badge-color-selector"></div>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex justify-between">
+      <button type="button"
+              class="btn btn-sm btn-ghost"
+              data-action="click->task-labels#cancelNewLabelForm">
+        Cancelar
+      </button>
+
+      <button type="button" 
+              class="btn btn-sm btn-primary"
+              data-action="click->task-labels#createLabel">
+        Criar
+      </button>
+    </div>
+  </form>
+</div>
 
   </div>
 <% end %>

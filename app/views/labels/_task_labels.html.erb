@@ -2,7 +2,7 @@
   <% task.labels.each do |label| %>
     <div class="badge badge-<%= label.color %> flex items-center gap-1">
       <span><%= label.title %></span>
-      <button type="button" 
+      <button type="button"
               class="ml-1 text-xs"
               data-action="click->task-labels#removeLabel"
               data-task-id="<%= task.id %>"

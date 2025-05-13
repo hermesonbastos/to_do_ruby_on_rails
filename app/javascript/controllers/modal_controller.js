@@ -1,32 +1,37 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  connect () {
-    this.dialog = this.element
-
-    if (!this.dialog.open && this.shouldAutoOpen()) this.open()
-  }
-
-  shouldAutoOpen() {
-    return this.dialog.classList.contains("modal-open") ||
-           this.dialog.dataset.autoOpen === "true"
+  connect() {
+    this.element.addEventListener('click', (event) => {
+      if (event.target === this.element) {
+        this.close();
+      }
+    });
   }
 
   open() {
-    this.dialog.showModal();
-    this.dialog.classList.remove("modal-open")
+    this.element.classList.add('modal-open');
+  }
+
+  afterSubmit() {
+    this.close();
   }
 
   close() {
-    this.dialog.close()
+    console.log("dsaodsaddsa")
+    this.element.classList.remove('modal-open');
+    
+    if (this.element.dataset.modalRemoveOnClose === "true") {
+      setTimeout(() => this.element.remove(), 150);
+    }
   }
 
-  afterSubmit(event) {
-    if (event.detail.success) this.close()
+cancel(event) {
+  event.preventDefault()
+  this.element.classList.remove("modal-open")
+  if (this.data.get("removeOnClose") === "true") {
+    setTimeout(() => this.element.remove(), 150)
   }
+}
 
-  cancel(event) { 
-    event.preventDefault();
-    this.close()
-  }
 }

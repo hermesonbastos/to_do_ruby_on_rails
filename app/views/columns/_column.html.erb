@@ -78,9 +78,13 @@
         </ul>
       </div>
       
-      <button data-action="click->column-settings#showNewTaskModal" 
-              data-column-editor-target="newTaskButton" 
-              class="badge transition-all cursor-pointer hover:shadow-md badge-primary text-slate-200 flex p-3 items-center rounded-sm">
+      <button
+        data-action="click->column-settings#showNewTaskModal"
+        data-modal-target="modal"
+        data-modal-id-param="new_task_modal_<%= column.id %>"
+        data-column-editor-target="newTaskButton" 
+        class="badge transition-all cursor-pointer hover:shadow-md badge-primary text-slate-200 flex p-3 items-center rounded-sm"
+      >
         <i class="fa-solid fa-plus"></i>
         <p class="mb-1">tarefa</p>
       </button>
@@ -103,7 +107,7 @@
   <% end %>
 </div>
   
-  <dialog id="delete_column_modal_<%= column.id %>" class="modal">
+  <div id="delete_column_modal_<%= column.id %>" class="modal">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Confirmar exclusão</h3>
       <p class="py-4">
@@ -114,7 +118,7 @@
       </p>
       <div class="modal-action">
         <form method="dialog">
-          <button class="btn btn-ghost">Cancelar</button>
+          <button class="btn btn-ghost" data-action="click->column-settings#close">Cancelar</button>
         </form>
         <%= button_to [column.board, column], 
                     method: :delete, 
@@ -124,9 +128,9 @@
         <% end %>
       </div>
     </div>
-  </dialog>
+  </div>
   
-  <dialog
+  <div
     id="new_task_modal_<%= column.id %>"
     class="modal"
     data-controller="modal"
@@ -137,5 +141,5 @@
       <div id="new_task_errors"></div>
       <%= render 'tasks/form', column: column, task: Task.new %>
     </div>
-  </dialog>
+  </div>
 </div>
