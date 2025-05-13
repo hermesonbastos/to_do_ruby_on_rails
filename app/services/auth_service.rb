@@ -16,7 +16,7 @@ class AuthService
 
   def process_password_step(password)
     user = User.find_by(email: @session[:auth_email])
-    
+
     if user&.authenticate(password)
       login_user(user)
     else
@@ -26,7 +26,7 @@ class AuthService
 
   def process_register_step(user_params)
     user = User.new(user_params.merge(email: @session[:auth_email]))
-    
+
     if user.save
       login_user(user)
     else
@@ -39,7 +39,7 @@ class AuthService
   def login_user(user)
     @session[:user_id] = user.id
     @session.delete(:auth_email)
-    
+
     { redirect_to: :boards, notice: "Login efetuado com sucesso." }
   end
 end

@@ -32,9 +32,8 @@ class Task < ApplicationRecord
 
   def set_position_if_nil
     return if position.present?
-    
+
     max_position = column.tasks.maximum(:position) || -1
     self.position = max_position + 1
   end
 end
-

@@ -5,6 +5,7 @@ class BoardsController < ApplicationController
     @boards = current_user.boards.order(created_at: :desc)
     @board = Board.new
     @columns = @board.columns.order(:position)
+    @daily_streak = DailyStreakService.new(current_user)
   end
 
   def show

@@ -55,8 +55,16 @@ class TasksController < ApplicationController
   def move
     @old_column = @task.column
     @new_column = Column.find(params[:target_column_id])
-  
-    if @task.update(column: @new_column, position: params[:newPosition])   
+
+    concluded_at = if @new_column.is_done_column && @task.concluded_at.nil?
+      Time.current
+    elsif !@new_column.is_done_column
+      nil
+    else
+      @task.concluded_at
+    end
+
+    if @task.update(column: @new_column, position: params[:newPosition], concluded_at: concluded_at)
       head :ok
     else
       render json: { error: "Failed to move task" }, status: :unprocessable_entity
