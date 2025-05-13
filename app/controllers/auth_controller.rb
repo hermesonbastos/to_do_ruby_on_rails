@@ -43,6 +43,10 @@ class AuthController < ApplicationController
     end
   end
 
+  def destroy
+    reset_session
+    redirect_to auth_path, notice: "Você foi desconectado."
+  end
 
   private
 
