@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :require_login, :set_column
-  before_action :set_task, only: [:show, :update, :destroy, :move]
+  before_action :set_task, only: [ :show, :update, :destroy, :move ]
 
   def create
     @task = @column.tasks.build(task_params)
@@ -64,7 +64,7 @@ class TasksController < ApplicationController
     @old_column = @task.column
     @new_column = Column.find(params[:target_column_id])
 
-    if @task.update(column: @new_column, position: params[:newPosition])   
+    if @task.update(column: @new_column, position: params[:newPosition])
       head :ok
     else
       render json: { error: "Failed to move task" }, status: :unprocessable_entity
