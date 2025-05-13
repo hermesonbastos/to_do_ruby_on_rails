@@ -10,20 +10,11 @@ class TasksController < ApplicationController
         GoogleCalendarService.new(current_user).create_or_update_event_for_task(@task)
       end
 
-      respond_to do |format|
-        format.html { redirect_to board_path(@column.board) }
-        format.turbo_stream
-      end
-
-      respond_to do |format|
-        format.html { redirect_to board_path(@column.board) }
-        format.turbo_stream
-      end
+      redirect_to board_path(@column.board)
+        # format.turbo_stream
     else
-      respond_to do |format|
-        format.html { redirect_to board_path(@column.board) }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_task_errors", partial: "tasks/errors", locals: { task: @task }) }
-      end
+      redirect_to board_path(@column.board)
+        # format.turbo_stream { render turbo_stream: turbo_stream.replace("new_task_errors", partial: "tasks/errors", locals: { task: @task }) }
     end
   end
 

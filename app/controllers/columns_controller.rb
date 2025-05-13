@@ -30,10 +30,7 @@ class ColumnsController < ApplicationController
   def destroy
     @column.destroy
 
-    respond_to do |format|
-      format.html { redirect_to board_path(@board) }
-      format.turbo_stream
-    end
+    redirect_to board_path(@board)
   end
 
   private

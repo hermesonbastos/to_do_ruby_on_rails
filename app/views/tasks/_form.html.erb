@@ -1,4 +1,4 @@
-<%= form_with model: [column, task], class: "mt-4" do |f| %>
+<%= form_with model: [column, task], class: "mt-4", data: { turbo: false } do |f| %>
   <div class="flex gap-4">
     <div class="w-2/3">
       <div class="form-control mb-4">
@@ -32,7 +32,7 @@
       </div>
     </div>
     
-    <div class="w-1/3 border-l pl-4" data-controller="task-labels">
+    <div class="w-1/3 pl-4" data-controller="task-labels">
       <h4 class="font-semibold mb-2">Etiquetas</h4>
       
       <% if task.persisted? %>
