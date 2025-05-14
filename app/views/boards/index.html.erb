@@ -1,4 +1,7 @@
 <%= render 'shared/navbar' %>
+<div class="mt-8 flex">
+  <%= render partial: 'shared/daily_streak', locals: { daily_streak: @daily_streak } %>
+</div>
 
 <div class="pt-8 px-2">
   <h1 class="text-3xl font-medium mb-6">Meus quadros</h1>
