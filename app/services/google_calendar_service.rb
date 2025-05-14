@@ -4,6 +4,7 @@ class GoogleCalendarService
   end
 
   def create_or_update_event_for_task(task)
+    return if task.due_date.blank?
     time_zone = "UTC"
     start_time = task.due_date + 3.hour # TODO: Verificar pq ta indo 3h a menos, paliativo coloquei + 3.hour
     end_time = start_time + 1.hour

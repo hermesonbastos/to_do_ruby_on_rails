@@ -49,24 +49,31 @@ class TasksController < ApplicationController
     redirect_to board_path(@task.column.board)
   end
 
-  def move
+ def move
     @old_column = @task.column
     @new_column = Column.find(params[:target_column_id])
+    new_pos = params[:new_position].to_i + 1
 
-    concluded_at = if @new_column.is_done_column && @task.concluded_at.nil?
-      Time.current
-    elsif !@new_column.is_done_column
-      nil
-    else
-      @task.concluded_at
+    Task.transaction do
+      if @new_column == @old_column
+        @task.insert_at(new_pos)
+      else
+        @task.column = @new_column
+
+        if @new_column.is_done_column? && @task.concluded_at.nil?
+          @task.concluded_at = Time.current
+        elsif !@new_column.is_done_column?
+          @task.concluded_at = nil
+        end
+        @task.save!
+        @task.insert_at(new_pos)
+      end
     end
 
-    if @task.update(column: @new_column, position: params[:newPosition], concluded_at: concluded_at)
-      head :ok
-    else
-      render json: { error: "Failed to move task" }, status: :unprocessable_entity
-    end
-  end
+    head :ok
+ rescue => e
+    render json: { error: e.message }, status: :unprocessable_entity
+ end
 
   private
 
@@ -75,7 +82,7 @@ class TasksController < ApplicationController
   end
 
   def set_task
-    @task = @column.tasks.find(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def task_params

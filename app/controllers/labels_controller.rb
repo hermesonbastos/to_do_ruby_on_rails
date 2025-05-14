@@ -48,25 +48,71 @@ class LabelsController < ApplicationController
     end
   end
 
-  def add_to_task
-    unless @task.labels.include?(@label)
-      @task.labels << @label
-    end
-
+ def add_to_task
+    @task.labels << @label unless @task.labels.include?(@label)
     @task.labels.reload
+
+    board = @task.column.board
+
+    task_labels_html = render_to_string(
+      partial: "tasks/labels",
+      locals: { task: @task },
+      formats: [:html],
+      layout: false
+    )
+
+    available_labels_html = render_to_string(
+      partial: "labels/available_labels",
+      locals: { board: board, task: @task },
+      formats: [:html],
+      layout: false
+    )
+
     respond_to do |format|
-      format.html { redirect_to board_path(@task.column.board), notice: "Etiqueta adicionada com sucesso." }
-      format.turbo_stream
+      format.json do
+        render json: {
+          success: true,
+          task_id: @task.id,
+          task_labels_html: task_labels_html,
+          available_labels_html: available_labels_html
+        }
+      end
+
+      format.html { redirect_to board_path(board), notice: "Etiqueta adicionada com sucesso." }
     end
-  end
+ end
 
   def remove_from_task
     @task.labels.delete(@label)
     @task.labels.reload
 
+    board = @task.column.board
+
+    task_labels_html = render_to_string(
+      partial: "tasks/labels",
+      locals: { task: @task },
+      formats: [:html],
+      layout: false
+    )
+
+    available_labels_html = render_to_string(
+      partial: "labels/available_labels",
+      locals: { board: board, task: @task },
+      formats: [:html],
+      layout: false
+    )
+
     respond_to do |format|
-      format.html { redirect_to board_path(@task.column.board), notice: "Etiqueta removida com sucesso." }
-      format.turbo_stream
+      format.json do
+        render json: {
+          success: true,
+          task_id: @task.id,
+          task_labels_html: task_labels_html,
+          available_labels_html: available_labels_html
+        }
+      end
+
+      format.html { redirect_to board_path(board), notice: "Etiqueta removida com sucesso." }
     end
   end
 

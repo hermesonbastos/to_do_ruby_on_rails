@@ -10,16 +10,6 @@
                           new_column_target: "input",
                           action: "keydown->new-column#handleKeydown"
                         } %>
-
-        <div class="flex items-center gap-1">
-          <%= f.check_box :is_done_column,
-                          class: "toggle toggle-primary toggle-sm",
-                          data: { new_column_target: "toggle" } %>
-          <span class="text-xs whitespace-nowrap">Coluna Done</span>
-          <div class="tooltip ml-1" data-tip="Caso ativada, todas as tarefas nessa coluna serão consideradas como concluídas.">
-            <i class="fa-solid fa-circle-info tooltip text-xs"></i>
-          </div>
-        </div>
       </div>
       <div class="flex gap-1">
         <%= f.submit "Salvar", class: "btn btn-sm btn-primary" %>

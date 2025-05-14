@@ -1,4 +1,4 @@
-<%= form_with model: [column, task], class: "mt-4", data: { turbo: false } do |f| %>
+<%= form_with model: [column, task], class: "mt-4" do |f| %>
   <div class="flex gap-4">
     <div class="w-2/3">
       <div class="form-control mb-4">
@@ -64,20 +64,6 @@
   </div>
   
   <div class="flex gap-2 justify-end mt-4">
-    <% if task.persisted? %>
-      <form
-        action="<%= column_task_path(column, task) %>"
-        method="post"
-        data-turbo-confirm=""
-        class="inline"
-      >
-        <input type="hidden" name="_method" value="delete">
-        <button class="btn btn-ghost btn-error" type="submit">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      </form>
-    <% end %>
-
     <button
       type="button"
       class="btn btn-ghost"

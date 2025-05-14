@@ -4,25 +4,18 @@ import Sortable from "sortablejs"
 export default class extends Controller {
   static values = {
     group: String,
-    reorderUrl: String,
-    url: String,
-    columnId: String 
+    reorderUrl: String, // para colunas
   }
 
   connect() {
-    console.log(this.element)
     this.sortable = Sortable.create(this.element, {
       animation: 150,
       group: this.groupValue,
-      sort: this.groupValue === "columns",
-      handle: this.groupValue === "columns" ? ".column-handle" : undefined,
       ghostClass: "sortable-ghost",
       chosenClass: "sortable-chosen",
       dragClass: "sortable-drag",
-      fallbackTolerance: this.groupValue === "tasks" ? 150 : undefined,
-      fallbackOnBody: this.groupValue === "tasks" ? true : undefined,
-      onChoose:  this.groupValue === "tasks" ? (e => e.item.classList.add("sortable-chosen"))  : undefined,
-      onUnchoose:this.groupValue === "tasks" ? (e => e.item.classList.remove("sortable-chosen","sortable-ghost","sortable-drag")) : undefined,
+      fallbackTolerance: 150,
+      fallbackOnBody: true,
       onEnd: this.onEnd.bind(this)
     })
   }
@@ -33,70 +26,29 @@ export default class extends Controller {
 
   onEnd(event) {
     event.item.classList.remove("sortable-chosen","sortable-ghost","sortable-drag")
-
-      console.log("ta executando")
-
-    if (this.groupValue === "columns") {
-      this.reorderColumns()
-    } else {
-      if (event.from !== event.to) {
-        this.moveTask(event)
-      } else {
-       // this.reorderTasks()
-      }
-    }
+    this.moveTask(event)
   }
-
-  reorderColumns() {
-    const ids = Array.from(this.element.children)
-      .filter(el => el.dataset.columnId)
-      .map(el => el.dataset.columnId)
-    if (!ids.length) return
-
-    fetch(this.reorderUrlValue, {
-      method: "PATCH",
-      headers: this._headers(),
-      body: JSON.stringify({ column_ids: ids })
-    })
-  }
-
-  // reorderTasks() {
-  //   const ids = Array.from(this.element.querySelectorAll(".task-card"))
-  //     .map(el => el.dataset.taskId)
-  //   if (!ids.length) return
-
-  //   fetch(this.urlValue, {
-  //     method: "PATCH",
-  //     headers: this._headers(),
-  //     body: JSON.stringify({ task_ids: ids })
-  //   })
-  // }
 
   moveTask(event) {
-    const taskId = event.item.dataset.taskId
-    const targetColumnId = event.to.dataset.columnId
-    
-    const noTasksElement = document.getElementById(`no_tasks_text_${targetColumnId}`)
-    const tasks = Array.from(event.to.querySelectorAll('.task-card'))
-    const newPosition = tasks.indexOf(event.item)
-  
-    if (noTasksElement) {
-      noTasksElement.style.display = 'none'
-    }
-  
-    fetch(`/columns/${this.columnIdValue}/tasks/${taskId}/move`, {
+    const taskId        = event.item.dataset.taskId
+    const originColumn  = event.from.dataset.columnId
+    const targetColumn  = event.to.dataset.columnId
+    const newPosition   = Array.from(event.to.querySelectorAll('.task-card')).indexOf(event.item)
+
+    // esconder texto “nenhuma task” se existir
+    const noTasksEl = document.getElementById(`no_tasks_text_${targetColumn}`)
+    if (noTasksEl) noTasksEl.style.display = 'none'
+
+    fetch(`/columns/${originColumn}/tasks/${taskId}/move`, {
       method: "PATCH",
       headers: this._headers(),
-      body: JSON.stringify({ target_column_id: targetColumnId, newPosition: newPosition })
+      body: JSON.stringify({ 
+        target_column_id: targetColumn, 
+        new_position: newPosition 
+      })
     })
-    .then(response => {
-      if (!response.ok) {
-        console.error("Error moving task")
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error)
-    })
+    .then(r => { if (!r.ok) console.error("Erro ao mover task") })
+    .catch(e => console.error("Erro:", e))
   }
 
   _headers() {

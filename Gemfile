@@ -40,6 +40,8 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 
+gem "acts_as_list", "~> 1.0"
+
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

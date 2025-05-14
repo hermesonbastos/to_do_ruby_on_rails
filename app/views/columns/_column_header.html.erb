@@ -8,22 +8,7 @@
         <button tabindex="0" class="btn btn-ghost btn-xs" data-column-settings-target="settingsButton">
             <i class="fa-solid fa-gear"></i>
         </button>
-        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mr-[-100px]">
-            <li>
-            <div class="form-control">
-                <label class="label cursor-pointer">
-                <span class="label-text">Coluna Done</span>
-                <%= form_with model: [column.board, column], 
-                            class: "toggle-form",
-                            data: { turbo: "false", action: "change->column-settings#toggleDoneColumn" } do |f| %>
-                    <%= f.check_box :is_done_column, 
-                                class: "toggle toggle-primary", 
-                                checked: column.is_done_column,
-                                data: { column_settings_target: "doneToggle" } %>
-                <% end %>
-                </label>
-            </div>
-            </li>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 mr-[-100px]">          
             <li>
             <a href="#" data-action="click->column-settings#confirmDelete" class="text-error">
                 <i class="fa-solid fa-trash"></i> Excluir coluna

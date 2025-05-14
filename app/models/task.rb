@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :column
   has_and_belongs_to_many :labels
+  acts_as_list scope: :column, column: :position
 
   validates :title, presence: true
   validates :difficulty,

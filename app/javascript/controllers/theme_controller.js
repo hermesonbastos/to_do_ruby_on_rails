@@ -3,20 +3,25 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["checkbox"]
 
-  connect () {
-    const saved = localStorage.getItem("theme") || "custom360"
-    document.documentElement.dataset.theme = saved
-
+  connect() {
+    const savedTheme = localStorage.getItem("theme") || "custom360"
+    this.applyTheme(savedTheme)
     this.checkboxTargets.forEach(cb => {
-      cb.checked = cb.value === saved
+      cb.checked = (cb.value === savedTheme)
     })
   }
-  
 
-  toggle (event) {
-    const newTheme = event.target.checked ? event.target.value : "custom360"
-    document.documentElement.dataset.theme = newTheme
-    localStorage.setItem("theme", newTheme)
-    document.cookie = `theme=${newTheme}; path=/; max-age=31536000`
+  toggle(event) {
+    const newTheme = event.target.checked 
+      ? event.target.value 
+      : "custom360"
+
+    this.applyTheme(newTheme)
+  }
+
+  applyTheme(theme) {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem("theme", theme)
+    document.cookie = `theme=${theme}; path=/; max-age=31536000`
   }
 }

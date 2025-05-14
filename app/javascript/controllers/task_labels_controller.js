@@ -48,48 +48,59 @@ export default class extends Controller {
     this.newLabelFormTarget.classList.add("hidden")
     this.availableLabelsListTarget.classList.remove("hidden")
   }
-  
+
+ 
   addLabel(event) {
-    const taskId = event.currentTarget.dataset.taskId
+    const taskId  = event.currentTarget.dataset.taskId
     const labelId = event.currentTarget.dataset.labelId
-    
+    const csrf    = document.querySelector('meta[name="csrf-token"]').content
+
     fetch(`/tasks/${taskId}/labels/${labelId}/add_to_task`, {
       method: "POST",
       headers: {
-        "Accept": "text/vnd.turbo-stream.html",
-        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+        "X-CSRF-Token": csrf,
+        "Accept": "application/json"
       }
     })
-    .then(response => 
-      {
-        console.log("acelereou")
-        return response.text()
-
-      })
-    .then(html => {
-              console.log("tatoooo")
-      Turbo.renderStreamMessage(html)
-      this.showLabelSelector(new Event("click"))
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        this.updateTaskLabels(data.task_id, data.task_labels_html)
+        this.updateAvailableLabels(data.task_id, data.available_labels_html)
+      } else {
+        alert(data.errors.join(", "))
+      }
+    })
+    .catch(err => {
+      console.error("Erro ao adicionar etiqueta:", err)
+      alert("Não foi possível adicionar a etiqueta. Tente novamente.")
     })
   }
-  
+
   removeLabel(event) {
-    const taskId = event.currentTarget.dataset.taskId
+    const taskId  = event.currentTarget.dataset.taskId
     const labelId = event.currentTarget.dataset.labelId
-    
+    const csrf    = document.querySelector('meta[name="csrf-token"]').content
+
     fetch(`/tasks/${taskId}/labels/${labelId}/remove_from_task`, {
       method: "DELETE",
       headers: {
-        "Accept": "text/vnd.turbo-stream.html",
-        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+        "X-CSRF-Token": csrf,
+        "Accept": "application/json"
       }
     })
-    .then(response => response.text())
-    .then(html => {
-      Turbo.renderStreamMessage(html)
-      if (!this.labelSelectorTarget.classList.contains("hidden")) {
-        this.showLabelSelector(new Event("click"))
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        this.updateTaskLabels(data.task_id, data.task_labels_html)
+        this.updateAvailableLabels(data.task_id, data.available_labels_html)
+      } else {
+        alert(data.errors.join(", "))
       }
+    })
+    .catch(err => {
+      console.error("Erro ao remover etiqueta:", err)
+      alert("Não foi possível remover a etiqueta. Tente novamente.")
     })
   }
 
@@ -146,15 +157,15 @@ export default class extends Controller {
     });
   }
   
-updateTaskLabels(taskId, html) {
-  const taskLabelsContainer = document.getElementById(`task_labels_${taskId}`);
-  if (taskLabelsContainer) {
-    taskLabelsContainer.innerHTML = html;
-  } else {
-    console.error(`Elemento com ID task_labels_${taskId} não encontrado`);
+  updateTaskLabels(taskId, html) {
+    const taskLabelsContainer = document.getElementById(`task_labels_${taskId}`);
+    if (taskLabelsContainer) {
+      taskLabelsContainer.innerHTML = html;
+    } else {
+      console.error(`Elemento com ID task_labels_${taskId} não encontrado`);
+    }
   }
-}
-  
+    
   updateAvailableLabels(taskId, html) {
     const availableLabelsContainer = document.getElementById(`available_labels_${taskId}`);
     if (availableLabelsContainer) {

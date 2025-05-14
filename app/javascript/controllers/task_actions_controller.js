@@ -5,7 +5,7 @@ export default class extends Controller {
     event.preventDefault();
 
     const taskId = this.element.dataset.taskId
-    const columnId = this.element.closest(".tasks-container").dataset.columnId
+    const columnId = this.element.dataset.columnId
     
     fetch(`/columns/${columnId}/tasks/${taskId}`, {
       headers: {
@@ -20,7 +20,7 @@ export default class extends Controller {
       {
         return Turbo.renderStreamMessage(html)
       }
-      )
+    )
   }
   
   confirmDelete(event) {
