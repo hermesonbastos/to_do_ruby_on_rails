@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  root to: redirect("/auth")
+
   get    "/auth",   to: "auth#new",     as: :auth
   post   "/auth",   to: "auth#create"
   delete "/logout", to: "auth#destroy", as: :logout
+  get "/auth/:provider/callback", to: "omniauth#google_oauth2"
+  get "/auth/failure", to: "omniauth#failure"
 
   resources :users, only: :show
 

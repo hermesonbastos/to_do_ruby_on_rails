@@ -1,21 +1,18 @@
 class TasksController < ApplicationController
   before_action :require_login, :set_column
-  before_action :set_task, only: [:show, :update, :destroy, :move]
+  before_action :set_task, only: [ :show, :update, :destroy, :move ]
 
   def create
     @task = @column.tasks.build(task_params)
 
     if @task.save
-      
-      respond_to do |format|
-        format.html { redirect_to board_path(@column.board) }
-        format.turbo_stream
+      if current_user.provider == "google_oauth2"
+        GoogleCalendarService.new(current_user).create_or_update_event_for_task(@task)
       end
+
+      redirect_to board_path(@column.board)
     else
-      respond_to do |format|
-        format.html { redirect_to board_path(@column.board) }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_task_errors", partial: "tasks/errors", locals: { task: @task }) }
-      end
+      redirect_to board_path(@column.board)
     end
   end
 
@@ -27,6 +24,10 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      if current_user.provider == "google_oauth2"
+        GoogleCalendarService.new(current_user).create_or_update_event_for_task(@task)
+      end
+
       respond_to do |format|
         format.html { redirect_to board_path(@column.board) }
         format.turbo_stream
@@ -40,17 +41,13 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    if current_user.provider == "google_oauth2" && @task.google_event_id.present?
+      GoogleCalendarService.new(current_user).delete_event_for_task(@task)
+    end
+
     @task.destroy
     redirect_to board_path(@task.column.board)
   end
-
-  # def reorder
-  #   params[:task_ids].each_with_index do |id, index|
-  #     Task.where(id: id).update_all(position: index)
-  #   end
-
-  #   head :ok
-  # end
 
   def move
     @old_column = @task.column

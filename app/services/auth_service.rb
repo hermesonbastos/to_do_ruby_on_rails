@@ -34,6 +34,14 @@ class AuthService
     end
   end
 
+  def process_social_login(user)
+    if user.persisted?
+      login_user(user)
+    else
+      { render: :register, user: user }
+    end
+  end
+
   private
 
   def login_user(user)

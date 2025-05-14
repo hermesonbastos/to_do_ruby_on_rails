@@ -10,9 +10,4 @@ class SessionsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def destroy
-    reset_session
-    redirect_to auth_path, notice: "Você foi desconectado."
-  end
 end

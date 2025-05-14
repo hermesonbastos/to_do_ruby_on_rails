@@ -6,11 +6,11 @@ class AuthController < ApplicationController
 
   def create
     auth_service = AuthService.new(session)
-    
+
     case params[:step]
     when "email"
       result = auth_service.process_email_step(params[:auth][:email])
-      
+
       if result[:redirect_to] == :password
         redirect_to auth_path(step: "password")
       else
@@ -18,10 +18,10 @@ class AuthController < ApplicationController
         @step = "register"
         render :new, status: :unprocessable_entity
       end
-      
+
     when "password"
       result = auth_service.process_password_step(params[:auth][:password])
-      
+
       if result[:redirect_to]
         login!(result)
       else
@@ -29,10 +29,10 @@ class AuthController < ApplicationController
         @step = "password"
         render :new, status: :unprocessable_entity
       end
-      
+
     when "register"
       result = auth_service.process_register_step(user_params)
-      
+
       if result[:redirect_to]
         login!(result)
       else
@@ -43,6 +43,10 @@ class AuthController < ApplicationController
     end
   end
 
+  def destroy
+    reset_session
+    redirect_to auth_path, notice: "Você foi desconectado."
+  end
 
   private
 
