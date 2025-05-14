@@ -7,9 +7,5 @@
    data-sortable-column-id-value="<%= column.id %>">
   <% if column.tasks.any? %>
     <%= render partial: 'tasks/task', collection: column.tasks.order(:position) %>
-  <% else %>
-    <div id="no_tasks_text_<%= column.id %>" class="text-center text-gray-400 py-4">
-      Sem tarefas
-    </div>
   <% end %>
 </div>

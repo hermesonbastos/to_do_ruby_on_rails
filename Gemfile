@@ -24,6 +24,8 @@ gem "jwt", "~> 2.6"
 
 gem "tailwindcss-rails"
 
+gem "faker"
+
 gem "omniauth"
 
 gem "omniauth-google-oauth2"
@@ -33,11 +35,12 @@ gem "omniauth-rails_csrf_protection"
 gem "google-api-client", require: "google/apis/calendar_v3"
 
 gem "dotenv-rails"
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+
+gem "acts_as_list", "~> 1.0"
 
 
 # Reduces boot times through caching; required in config/boot.rb

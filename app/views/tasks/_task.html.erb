@@ -1,5 +1,6 @@
 <div id="<%= dom_id(task) %>" 
      data-task-id="<%= task.id %>"
+     data-column-id="<%= task.column_id %>"
      class="p-4 rounded-md bg-base-300 shadow-sm transition hover:cursor-pointer border border-base-200 hover:shadow-md hover:border-base-300 relative task-card task"
      data-controller="task-actions"
      data-action="click->task-actions#showTask">
