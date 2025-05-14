@@ -36,9 +36,12 @@ class UserMetrics
       .where(user_id: @user.id)
       .map do |board|
         last_column = board.columns.order(:id).last
+        next if last_column.nil?
+
         completed_tasks_count = last_column.tasks.where.not(concluded_at: nil).count
         { name: board.name, count: completed_tasks_count }
       end
+      .compact
       .sort_by { |b| -b[:count] }
       .first(5)
   end

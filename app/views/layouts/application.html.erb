@@ -24,8 +24,8 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="min-h-screen flex flex-col pt-4 md:pt-6 bg-base-300">
-    <main class="w-full flex-grow full-width-container">
+  <body class="min-h-screen flex flex-col pt-4 md:pt-6 bg-base-300 overflow-x-hidden">
+    <main class="w-full flex-grow full-width-container pb-10">
       <div id="task_modal_container"></div>
       <%= yield %>
     </main>
