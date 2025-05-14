@@ -5,7 +5,10 @@ class BoardsController < ApplicationController
     @boards = current_user.boards.order(created_at: :desc)
     @board = Board.new
     @columns = @board.columns.order(:position)
-    @daily_streak = DailyStreakService.new(current_user)
+    @metrics = UserMetrics.new(current_user)
+    @chart_data = @metrics.completed_tasks_per_board
+    @task_distribution_data = @metrics.task_distribution_per_board
+    @productive_days_data = @metrics.completed_tasks_per_weekday
   end
 
   def show

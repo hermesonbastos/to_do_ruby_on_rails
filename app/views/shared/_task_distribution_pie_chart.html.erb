@@ -1,0 +1,30 @@
+<% total_tasks = data.sum { |d| d[:count] } %>
+<% current_angle = 0.0 %>
+<% color_palette = %w[#3b82f6 #22c55e #facc15 #ef4444 #a855f7 #14b8a6] %>
+
+<% gradient_parts = data.each_with_index.map do |board, index| 
+     percentage = total_tasks.zero? ? 0 : (board[:count].to_f / total_tasks * 100)
+     start_angle = current_angle
+     current_angle += percentage
+     "#{color_palette[index % color_palette.size]} #{start_angle.round(2)}% #{current_angle.round(2)}%"
+   end.join(', ') %>
+
+<div class="flex flex-col items-center gap-4 max-w-2xl bg-base-100 p-8 rounded-lg shadow-sm h-full w-full">
+  <h2 class="text-lg font-bold">Distribuição de Tarefas</h2>
+
+  <div class="relative w-32 h-32 rounded-full"
+     style="background: conic-gradient(<%= gradient_parts %>)">
+    <div class="absolute top-1/2 left-1/2 w-16 h-16 -translate-x-1/2 -translate-y-1/2 bg-transparent rounded-full"></div>
+  </div>
+
+  <ul class="text-sm space-y-1">
+    <% data.each_with_index do |board, index| %>
+      <% percentage = total_tasks.zero? ? 0 : ((board[:count].to_f / total_tasks) * 100).round(1) %>
+      <li>
+        <span class="inline-block w-3 h-3 rounded-full mr-2"
+              style="background-color: <%= color_palette[index % color_palette.size] %>"></span>
+        <%= board[:name] %> (<%= board[:count] %> tarefas – <%= percentage %>%)
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -5,6 +5,9 @@ class TasksController < ApplicationController
   def create
     @task = @column.tasks.build(task_params)
 
+    last_column = @column.board.columns.order(:id).last
+    @task.concluded_at = Time.current if @column == last_column
+
     if @task.save
       if current_user.provider == "google_oauth2"
         GoogleCalendarService.new(current_user).create_or_update_event_for_task(@task)
@@ -49,7 +52,7 @@ class TasksController < ApplicationController
     redirect_to board_path(@task.column.board)
   end
 
- def move
+  def move
     @old_column = @task.column
     @new_column = Column.find(params[:target_column_id])
     new_pos = params[:new_position].to_i + 1
@@ -60,20 +63,23 @@ class TasksController < ApplicationController
       else
         @task.column = @new_column
 
-        if @new_column.is_done_column? && @task.concluded_at.nil?
-          @task.concluded_at = Time.current
-        elsif !@new_column.is_done_column?
+        last_column = @new_column.board.columns.order(:id).last
+
+        if @new_column == last_column
+          @task.concluded_at ||= Time.current
+        else
           @task.concluded_at = nil
         end
+
         @task.save!
         @task.insert_at(new_pos)
       end
     end
 
     head :ok
- rescue => e
+  rescue => e
     render json: { error: e.message }, status: :unprocessable_entity
- end
+  end
 
   private
 

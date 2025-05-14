@@ -1,6 +1,6 @@
 <%= form_with model: [column, task], class: "mt-4" do |f| %>
-  <div class="flex gap-4">
-    <div class="w-2/3">
+  <div class="flex gap-4 flex-col md:flex-row">
+    <div class="md:w-2/3">
       <div class="form-control mb-4">
         <%= f.label :title, "Título", class: "label" %>
         <%= f.text_field :title, class: "input input-bordered w-full", placeholder: "Título da tarefa" %>
@@ -32,7 +32,7 @@
       </div>
     </div>
     
-    <div class="w-1/3 pl-4" data-controller="task-labels">
+    <div class="md:w-1/3 md:pl-4" data-controller="task-labels">
       <h4 class="font-semibold mb-2">Etiquetas</h4>
       
       <% if task.persisted? %>
@@ -41,7 +41,7 @@
         </div>
         
         <button type="button" 
-                class="badge badge-outline badge-neutral flex items-center gap-1 cursor-pointer"
+                class="btn btn-outline btn-sm rounded-full badge-neutral flex items-center gap-1 cursor-pointer"
                 data-action="click->task-labels#showLabelSelector"
                 data-task-labels-target="addButton"
                 data-task-id="<%= task.id %>"
@@ -50,7 +50,7 @@
           <span>Adicionar etiqueta</span>
         </button>
         
-        <div class="hidden mt-4" data-task-labels-target="labelSelector" id="label_selector_<%= task.id %>">
+        <div class="mt-4" data-task-labels-target="labelSelector" id="label_selector_<%= task.id %>">
         </div>
       <% else %>
         <p class="text-gray-400 text-sm mb-4">Etiquetas poderão ser adicionadas após criar a tarefa.</p>

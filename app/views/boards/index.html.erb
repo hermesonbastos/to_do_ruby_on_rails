@@ -1,14 +1,26 @@
 <%= render 'shared/navbar' %>
-<div class="mt-8 flex">
-  <%= render partial: 'shared/daily_streak', locals: { daily_streak: @daily_streak } %>
-</div>
 
-<div class="pt-8 px-2">
+<div class="pt-4 md:pt-6 px-2">
   <h1 class="text-3xl font-medium mb-6">Meus quadros</h1>
 
-  <div class="flex flex-col md:flex-row flex-wrap gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b-4 border-base-200  pb-4">
     <%= render partial: 'boards/board_card', collection: @boards, as: :board %>
     <%= render 'boards/new_board_button' %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 px-2">
+  <div class="flex flex-row md:flex-col gap-4 md:col-span-1">
+    <%= render partial: 'shared/daily_streak', locals: { daily_streak: @daily_streak } %>
+    <%= render partial: "shared/task_distribution_pie_chart", locals: { data: @task_distribution_data } %>
+  </div>
+
+  <div class="h-full w-full md:col-span-1">
+    <%= render partial: "shared/completed_tasks_bar_chart", locals: { data: @metrics.completed_tasks_per_board } %>
+  </div>
+
+  <div class="h-full w-full md:col-span-1">
+    <%= render partial: "shared/productive_days_bar_chart", locals: { data: @productive_days_data } %>
   </div>
 </div>
 

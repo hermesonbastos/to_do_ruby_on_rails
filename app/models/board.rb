@@ -8,6 +8,6 @@ class Board < ApplicationRecord
   after_create :create_default_columns
 
   def create_default_columns
-    columns.create!([{ name: 'To do' }, { name: 'Doing' }, { name: 'Done' }])
+    columns.create!([ { name: "To do" }, { name: "Doing" }, { name: "Done" } ])
   end
 end
