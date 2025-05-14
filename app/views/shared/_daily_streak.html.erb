@@ -1,10 +1,14 @@
-<div class="bg-base-100 p-5 rounded-lg shadow-sm flex items-center">
+<div class="bg-base-100 p-8 rounded-lg shadow-sm flex items-center justify-center h-full w-full">
   <div class="flex flex-col">
-    <div class="flex gap-2 items-end justify-center">
-      <p class="text-7xl font-semibold p-0 m-0">
-        <%= daily_streak.total_streak %>
+    <div class="flex gap-3 items-end justify-center">
+      <p class="text-5xl font-semibold p-0 m-0">
+        <%= @metrics.current_week_days_with_tasks %>
       </p>
-      <i class="text-5xl fa-solid fa-fire mb-1 text-accent"></i>
+      <% if @metrics.current_week_days_with_tasks.zero? %>
+        <i class="text-4xl fa-solid fa-snowflake mb-1 text-sky-300"></i>
+      <% else %>
+        <i class="text-4xl fa-solid fa-fire mb-1 text-accent"></i>
+      <% end %>
     </div>
 
     <p class="font-semibold text-center text-lg">dias consecutivos</p>

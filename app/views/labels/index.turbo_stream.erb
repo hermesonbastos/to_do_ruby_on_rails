@@ -12,7 +12,7 @@
 
       <div class="pt-2">
         <button type="button" 
-                class="text-sm text-primary flex items-center gap-1"
+                class="btn btn-accent btn-sm text-sm flex items-center gap-1"
                 data-action="click->task-labels#showNewLabelForm"
                 data-task-labels-target="createButton">
           <i class="fa-solid fa-plus"></i>
@@ -35,7 +35,7 @@
     <div class="form-control mb-2">
       <label class="label">Cor</label>
       <div class="flex flex-wrap gap-2">
-        <% %w[primary secondary accent info success warning error neutral].each do |color| %>
+        <% %w[primary secondary success warning error neutral].each do |color| %>
           <label class="cursor-pointer">
             <input type="radio" name="label[color]" value="<%= color %>" class="hidden">
             <div class="badge rounded-full w-6 h-6 badge-<%= color %> p-2 badge-color-selector"></div>

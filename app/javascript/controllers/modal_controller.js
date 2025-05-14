@@ -18,7 +18,6 @@ export default class extends Controller {
   }
 
   close() {
-    console.log("dsaodsaddsa")
     this.element.classList.remove('modal-open');
     
     if (this.element.dataset.modalRemoveOnClose === "true") {
@@ -26,12 +25,12 @@ export default class extends Controller {
     }
   }
 
-cancel(event) {
-  event.preventDefault()
-  this.element.classList.remove("modal-open")
-  if (this.data.get("removeOnClose") === "true") {
-    setTimeout(() => this.element.remove(), 150)
+  cancel(event) {
+    event.preventDefault()
+    this.element.classList.remove("modal-open")
+    if (this.data.get("removeOnClose") === "true") {
+      setTimeout(() => this.element.remove(), 150)
+    }
   }
-}
 
 }

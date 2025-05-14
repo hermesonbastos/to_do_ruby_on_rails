@@ -57,14 +57,14 @@ class LabelsController < ApplicationController
     task_labels_html = render_to_string(
       partial: "tasks/labels",
       locals: { task: @task },
-      formats: [:html],
+      formats: [ :html ],
       layout: false
     )
 
     available_labels_html = render_to_string(
       partial: "labels/available_labels",
       locals: { board: board, task: @task },
-      formats: [:html],
+      formats: [ :html ],
       layout: false
     )
 
@@ -91,14 +91,14 @@ class LabelsController < ApplicationController
     task_labels_html = render_to_string(
       partial: "tasks/labels",
       locals: { task: @task },
-      formats: [:html],
+      formats: [ :html ],
       layout: false
     )
 
     available_labels_html = render_to_string(
       partial: "labels/available_labels",
       locals: { board: board, task: @task },
-      formats: [:html],
+      formats: [ :html ],
       layout: false
     )
 

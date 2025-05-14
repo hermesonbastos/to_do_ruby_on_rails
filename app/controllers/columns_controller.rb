@@ -41,6 +41,7 @@ class ColumnsController < ApplicationController
 
   def set_column
     @column = @board.columns.find(params[:id])
+    @is_done_column = (@column == @board.columns.order(:position).last)
   end
 
   def column_params
