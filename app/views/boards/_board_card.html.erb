@@ -8,7 +8,7 @@
   </figure>
   <div class="card-body p-4 md:p-6 flex justify-end">
     <div>
-      <div class="flex justify-between items-end">
+      <div class="flex justify-between items-end gap-6">
         <div>
           <h2 class="card-title"><%= board.name %></h2>
           <% if board.description.present? %>
@@ -30,7 +30,7 @@
             </button>
           </div>
           <div class="badge badge-neutral text-[10px]">
-            Criado <%= board.created_at.strftime("%d/%m/%Y") %>
+            <%= board.created_at.strftime("%d/%m/%Y") %>
           </div>
         </div>
       </div>

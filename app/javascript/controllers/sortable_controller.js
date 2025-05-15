@@ -4,7 +4,7 @@ import Sortable from "sortablejs"
 export default class extends Controller {
   static values = {
     group: String,
-    reorderUrl: String, // para colunas
+    reorderUrl: String,
   }
 
   connect() {

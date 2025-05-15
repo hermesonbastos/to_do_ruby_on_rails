@@ -4,7 +4,7 @@ class Board < ApplicationRecord
   has_many :columns, -> { order(position: :asc) }, dependent: :destroy
 
   validates :name, presence: true
-  validates :banner, length: { maximum: 1.megabyte }, allow_nil: true
+  validates :banner, length: { maximum: 3.megabyte }, allow_nil: true
   after_create :create_default_columns
 
   def create_default_columns

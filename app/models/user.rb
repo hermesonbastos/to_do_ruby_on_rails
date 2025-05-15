@@ -8,10 +8,6 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false },
                     format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  validates :profile_photo,
-            length: { maximum: 1.megabyte },
-            allow_nil: true
-
   def self.from_omniauth(auth)
     user = find_or_initialize_by(email: auth.info.email)
 

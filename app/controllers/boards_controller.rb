@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
   def update
     if @board.update(board_params)
       respond_to do |format|
-        format.html { redirect_to boards_path, notice: "Quadro atualizado com sucesso." }
+        format.html { redirect_to boards_path }
         format.turbo_stream
       end
     else

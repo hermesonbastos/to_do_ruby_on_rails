@@ -17,7 +17,7 @@
   --color-primary-content: oklch(93% 0.034 272.788);
   --color-secondary: oklch(29% 0.149 302.717);
   --color-secondary-content: oklch(94% 0.028 342.258);
-  --color-accent: oklch(70% 0.213 47.604);
+  --color-accent: oklch(64% 0.222 41.116);
   --color-accent-content: oklch(100% 0 0);
   --color-neutral: oklch(27% 0.006 286.033);
   --color-neutral-content: oklch(92% 0.004 286.32);
@@ -86,8 +86,8 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding-left: 16vw;
-  padding-right: 16vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
 }
 
 @media (max-width: 1250px) {
@@ -99,8 +99,8 @@
 
 @media (max-width: 768px) {
   .full-width-container {
-    padding-left: .5rem;
-    padding-right: .5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
