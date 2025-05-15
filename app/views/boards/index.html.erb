@@ -1,29 +1,32 @@
 <%= render 'shared/navbar' %>
-
-<div class="pt-4 md:pt-6 px-2">
-  <h1 class="text-3xl font-medium mb-6">Meus quadros</h1>
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <%= render partial: 'boards/board_card', collection: @boards, as: :board %>
-    <%= render 'boards/new_board_button' %>
+<div data-controller="tabs">
+  <div class="flex justify-end md:justify-start items-center">
+    <div role="tablist" class="tabs tabs-box mt-4">
+      <a role="tab" class="tab font-semibold" data-action="click->tabs#select" data-tabs-target="tab">Boards</a>
+      <a role="tab" class="tab font-semibold" data-action="click->tabs#select" data-tabs-target="tab">Métricas</a>
+    </div>
+  </div>
+  <div class="pt-4 md:pt-6" data-tabs-target="content">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <%= render partial: 'boards/board_card', collection: @boards, as: :board %>
+      <%= render 'boards/new_board_button' %>
+    </div>
+  </div>
+  <div class="hidden" data-tabs-target="content">
+    <% if @boards.size > 0 %>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+        <div class="flex flex-col gap-4 md:col-span-1">
+          <%= render partial: 'shared/daily_streak', locals: { daily_streak: @daily_streak } %>
+          <%= render partial: "shared/task_distribution_pie_chart", locals: { data: @task_distribution_data } %>
+        </div>
+        <div class="h-full w-full md:col-span-1">
+          <%= render partial: "shared/completed_tasks_bar_chart", locals: { data: @metrics.completed_tasks_per_board } %>
+        </div>
+        <div class="h-full w-full md:col-span-1">
+          <%= render partial: "shared/productive_days_bar_chart", locals: { data: @productive_days_data } %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
-
-<% if @boards.size > 0 %>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-2 border-t-4 border-base-200 pt-4 mt-4">
-    <div class="flex flex-row md:flex-col gap-4 md:col-span-1">
-      <%= render partial: 'shared/daily_streak', locals: { daily_streak: @daily_streak } %>
-      <%= render partial: "shared/task_distribution_pie_chart", locals: { data: @task_distribution_data } %>
-    </div>
-
-    <div class="h-full w-full md:col-span-1">
-      <%= render partial: "shared/completed_tasks_bar_chart", locals: { data: @metrics.completed_tasks_per_board } %>
-    </div>
-
-    <div class="h-full w-full md:col-span-1">
-      <%= render partial: "shared/productive_days_bar_chart", locals: { data: @productive_days_data } %>
-    </div>
-  </div>
-<% end %>
-
 <%= render 'boards/new_board_modal' %>

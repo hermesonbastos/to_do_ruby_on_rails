@@ -1,5 +1,5 @@
-<div class="navbar bg-base-100 shadow-sm rounded-lg px-4">
-  <div class="navbar-start">
+<div class="navbar bg-base-100 shadow-sm rounded-lg px-4 flex justify-between">
+  <div class="navbar-start hidden md:block">
     <% unless controller_name == "boards" && action_name == "index" %>
       <%= link_to boards_path, class: "btn btn-ghost flex items-center gap-1" do %>
         <i class="fa-solid fa-arrow-left text-lg"></i>
@@ -22,12 +22,10 @@
         stroke-linecap="round"
         stroke-linejoin="round">
         <circle cx="12" cy="12" r="5" />
-        <path
-          d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+        <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
       </svg>
-        <div data-controller="theme">
-        <input
-          type="checkbox"
+      <div data-controller="theme">
+        <input type="checkbox"
           value="custom360dark"
           class="toggle"
           data-theme-target="checkbox"
@@ -56,14 +54,16 @@
       <ul
         tabindex="0"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow right-2">
-        <li>
-          <p class="font-semibold">
-            <%= link_to "Sair", logout_path, method: :delete, "data-turbo-method": :delete %>
-          </p>
-        </li>
+        <%= link_to logout_path,
+                method: :delete,
+                "data-turbo-method": :delete do %>
+          <li>
+            <p class="font-semibold">
+              Sair
+            </p>
+          </li>
+        <% end %>
       </ul>
     </div>
-    
   </div>
 </div>
-
