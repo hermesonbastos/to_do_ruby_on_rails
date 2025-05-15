@@ -1,0 +1,9 @@
+<%= button_to "/auth/google_oauth2",
+        method: :post,
+        data: {
+          turbo: "false"
+        },
+        class: "btn bg-orange-600 flex gap-2" do %>
+        <p>Entrar com Google</p>
+        <i class="fa-brands fa-google text-lg"></i>
+      <% end %>
