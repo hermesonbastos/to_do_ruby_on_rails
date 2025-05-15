@@ -78,7 +78,7 @@ class LabelsController < ApplicationController
         }
       end
 
-      format.html { redirect_to board_path(board), notice: "Etiqueta adicionada com sucesso." }
+      format.html { redirect_to board_path(board) }
     end
  end
 
@@ -112,7 +112,7 @@ class LabelsController < ApplicationController
         }
       end
 
-      format.html { redirect_to board_path(board), notice: "Etiqueta removida com sucesso." }
+      format.html { redirect_to board_path(board) }
     end
   end
 

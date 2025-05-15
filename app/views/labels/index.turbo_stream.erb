@@ -21,11 +21,9 @@
       </div>
     </div>
 
- <!-- Em app/views/labels/index.turbo_stream.erb -->
 <div class="hidden" data-task-labels-target="newLabelForm">
   <h5 class="font-semibold mb-2">Nova etiqueta</h5>
   
-  <!-- Formulário sem Turbo -->
   <form id="new_label_form" class="new_label">
     <input type="hidden" name="task_id" value="<%= @task.id %>">
     <div class="form-control mb-2">
@@ -35,12 +33,30 @@
     <div class="form-control mb-2">
       <label class="label">Cor</label>
       <div class="flex flex-wrap gap-2">
-        <% %w[primary secondary success warning error neutral].each do |color| %>
           <label class="cursor-pointer">
-            <input type="radio" name="label[color]" value="<%= color %>" class="hidden">
-            <div class="badge rounded-full w-6 h-6 badge-<%= color %> p-2 badge-color-selector"></div>
+            <input type="radio" name="label[color]" value="primary" class="hidden">
+            <span class="badge rounded-full w-6 h-6 badge-primary p-2 badge-color-selector"></span>
           </label>
-        <% end %>
+          <label class="cursor-pointer">
+            <input type="radio" name="label[color]" value="secondary" class="hidden">
+            <span class="badge rounded-full w-6 h-6 badge-secondary p-2 badge-color-selector"></span>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="label[color]" value="success" class="hidden">
+            <span class="badge rounded-full w-6 h-6 badge-success p-2 badge-color-selector"></span>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="label[color]" value="warning" class="hidden">
+            <span class="badge rounded-full w-6 h-6 badge-warning p-2 badge-color-selector"></span>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="label[color]" value="error" class="hidden">
+            <span class="badge rounded-full w-6 h-6 badge-error p-2 badge-color-selector"></span>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="label[color]" value="neutral" class="hidden">
+            <span class="badge rounded-full w-6 h-6 badge-neutral p-2 badge-color-selector"></span>
+          </label>
       </div>
     </div>
 

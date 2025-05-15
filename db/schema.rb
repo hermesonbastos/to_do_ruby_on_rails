@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_13_174653) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_15_102526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -27,7 +27,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_174653) do
   create_table "columns", force: :cascade do |t|
     t.bigint "board_id", null: false
     t.string "name", null: false
-    t.text "description"
     t.integer "position", default: 0, null: false
     t.boolean "is_done_column", default: false, null: false
     t.datetime "created_at", null: false
@@ -71,7 +70,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_174653) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
-    t.text "profile_photo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "provider"

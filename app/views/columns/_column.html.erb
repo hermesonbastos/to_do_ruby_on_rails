@@ -1,7 +1,7 @@
 <div
   id="<%= dom_id(column) %>" 
   data-column-id="<%= column.id %>"
-  class="card column relative shadow-sm bg-base-100 w-70 min-h-100 flex-shrink-0 <%= 'border border-green-300' if column.is_done_column %>" 
+  class="card column relative shadow-sm bg-base-100 min-h-20 md:min-h-100 md:w-70 <%= 'border border-green-300' if column.is_done_column %>" 
   data-controller="column-editor column-settings"
   data-column-settings-board-id-value="<%= column.board_id %>"
   data-column-settings-column-id-value="<%= column.id %>"

@@ -2,7 +2,7 @@
 
 <% if @task.column.tasks.reload.none? %>
   <%= turbo_stream.replace "column_#{@task.column.id}_tasks" do %>
-    <div class="flex flex-col p-2 gap-2 tasks-container"
+    <div class="flex flex-col p-2 gap-2 tasks-container h-full"
        id="column_<%= @column.id %>_tasks"
        data-column-id="<%= @column.id %>"
        data-controller="sortable"

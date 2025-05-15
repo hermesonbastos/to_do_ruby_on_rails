@@ -7,7 +7,7 @@
     <% end %>
   </div>
   <div class="navbar-center">
-    <%= link_to "ToDone", boards_path, class: "btn btn-ghost text-xl" %>
+    <%= link_to (@board&.name || "ToDone"), boards_path, class: "btn btn-ghost text-xl" %>
   </div>
   <div class="navbar-end flex gap-3">
     <%= render 'shared/toggle_theme_button' %>

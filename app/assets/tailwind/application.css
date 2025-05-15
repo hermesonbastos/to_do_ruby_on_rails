@@ -86,8 +86,8 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  padding-left: 16vw;
-  padding-right: 16vw;
+  padding-left: 10vw;
+  padding-right: 10vw;
 }
 
 @media (max-width: 1250px) {
