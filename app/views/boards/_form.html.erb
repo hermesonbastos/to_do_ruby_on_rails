@@ -1,0 +1,30 @@
+<%= form_with model: board do |f| %>
+  <div class="form-control mb-4">
+    <label class="label"><span class="label-text">Nome</span></label>
+    <%= f.text_field :name, required: true, class: "input input-bordered w-full" %>
+  </div>
+  <div class="form-control mb-4">
+    <label class="label"><span class="label-text">Descrição (opcional)</span></label>
+    <%= f.text_area :description, rows: 3, class: "textarea textarea-bordered w-full" %>
+  </div>
+  <div class="form-control mb-6">
+    <label class="label"><span class="label-text">Banner (opcional)</span></label>
+    <img
+      data-banner-preview-target="preview"
+      class="w-full h-32 object-cover mb-2 rounded <%= 'hidden' unless board.banner.present? %>"
+      src="<%= "data:image/jpeg;base64,#{board.banner}" if board.banner.present? %>"
+    />
+    <input type="file"
+           accept="image/*"
+           data-banner-preview-target="fileInput"
+           data-action="change->banner-preview#preview"
+    class="file-input file-input-bordered w-full" />
+    <%= f.hidden_field :banner, value: board.banner, data: { "banner-preview-target": "hidden" } %>
+  </div>
+      <div class="modal-action">
+        <label for="<%= modal_id %>" class="btn btn-ghost">
+          Cancelar
+        </label>
+        <%= f.submit board.persisted? ? "Atualizar" : "Criar", class: "btn btn-primary" %>
+      </div>
+    <% end %>

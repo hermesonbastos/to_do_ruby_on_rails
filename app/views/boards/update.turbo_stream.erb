@@ -1,0 +1,3 @@
+<%= turbo_stream.replace dom_id(@board) do %>
+  <%= render partial: "boards/board_card", locals: { board: @board } %>
+<% end %>

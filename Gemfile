@@ -34,6 +34,8 @@ gem "omniauth-rails_csrf_protection"
 
 gem "google-api-client", require: "google/apis/calendar_v3"
 
+gem "htmlbeautifier"
+
 gem "dotenv-rails"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

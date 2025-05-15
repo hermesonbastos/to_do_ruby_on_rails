@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: redirect("/auth")
+  root to: "auth#new"
 
   get    "/auth",   to: "auth#new",     as: :auth
   post   "/auth",   to: "auth#create"
@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, only: :show
 
-  resources :boards, only: %i[index show create] do
+  resources :boards, only: %i[index show create update destroy] do
     resources :columns, only: %i[create update destroy] do
       patch :reorder, on: :collection
     end

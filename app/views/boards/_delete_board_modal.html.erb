@@ -1,0 +1,21 @@
+<div id="delete_board_modal_<%= board.id %>" class="modal" data-controller="board-actions">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Confirmar exclusão</h3>
+    <p class="py-4">
+      Tem certeza que deseja excluir o quadro "<%= board.name %>"?
+    </p>
+    <div class="modal-action">
+      <button type="button"
+              class="btn btn-ghost"
+              data-action="click->board-actions#closeModal"
+              data-board-id="<%= board.id %>">
+        Cancelar
+      </button>
+      <%= button_to board_path(board),
+            method: :delete,
+            class: "btn btn-error" do %>
+        Excluir
+      <% end %>
+    </div>
+  </div>
+</div>

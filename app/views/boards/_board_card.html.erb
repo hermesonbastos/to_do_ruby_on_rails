@@ -1,16 +1,44 @@
-<div class="card h-48 bg-base-100 shadow-sm transition hover:cursor-pointer hover:shadow-lg">
+<div id="<%= dom_id(board) %>" class="card h-32 md:h-48 bg-base-100 shadow-sm transition hover:cursor-pointer hover:shadow-lg">
   <figure class="h-18 overflow-hidden">
     <% if board.banner.present? %>
       <img src="data:image/*;base64,<%= board.banner %>" alt="<%= board.name %>" class="w-full h-full object-cover">
     <% else %>
       <%= image_tag "default_board_banner.webp", alt: board.name, class: "w-full h-full object-cover" %>
     <% end %>
-</figure>
-  <div class="card-body">
-    <h2 class="card-title"><%= board.name %></h2>
-    <% if board.description.present? %>
-      <p><%= board.description %></p>
-    <% end %>
+  </figure>
+  <div class="card-body p-4 md:p-6 flex justify-end">
+    <div>
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="card-title"><%= board.name %></h2>
+          <% if board.description.present? %>
+            <p><%= board.description %></p>
+          <% end %>
+        </div>
+        <div class="flex flex-col items-end justify-end gap-2">
+          <div class="flex gap-2" data-controller="board-actions modal">
+            <label
+              for="edit-board-modal-<%= board.id %>"
+              class="z-10 text-gray-500 hover:text-info p-1 cursor-pointer"
+            >
+              <i class="fa-solid fa-pen-to-square"></i>
+            </label>
+            <button class="z-10 text-gray-500 hover:text-error p-1 cursor-pointer"
+        data-action="click->board-actions#confirmDelete click->board-actions#stopPropagation"
+              data-board-id="<%= board.id %>">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+          <div class="badge badge-neutral text-[10px]">
+            Criado <%= board.created_at.strftime("%d/%m/%Y") %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <%= link_to "", board_path(board), class: "absolute inset-0" %>
+  <%= render partial: 'boards/delete_board_modal', locals: { board: board } %>
+  <div data-controller="modal">
+    <%= render partial: 'boards/edit_board_modal', locals: { board: board } %>
+  </div>
 </div>

@@ -1,31 +1,28 @@
 <div class="min-h-screen flex flex-col items-center justify-center">
-  <div class="card w-full max-w-md shadow-lg">
+  <div class="card w-full max-w-md shadow-lg bg-base-200 pt-10">
     <div class="card-body flex flex-col gap-10">
-      <div class="flex flex-col items-center gap-4">
+      <div class="flex flex-col items-center gap-8">
         <p class="text-3xl font-bold text-center">ToDone</p>
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center text-lg">
           <p clas="text-center">Bem vindo(a) ao ToDone</p>
-          <p clas="text-center">Suas tarefas da maneira mais simples</p>
+          <p clas="text-center">Suas tarefas da maneira mais <span class="text-orange-400 font-semibold">simples</span></p>
         </div>
       </div>
       <div>
         <% if flash[:alert] %>
-          <div class="alert alert-error mb-4"><%= flash[:alert] %></div>
+          <div class="alert alert-error mb-4"> 
+            <p class="font-semibold"><%= flash[:alert] %></p>
+          </div>
         <% end %>
         <%= render 'form' %>
       </div>
     </div>
   </div>
-  <div class="flex justify-end">
-     <%= button_to "Entrar com Google",
-        "/auth/google_oauth2",
-        method: :post,
-        data: {
-          turbo: "false"
-        },
-        class: "btn btn-primary" %>
-    <a target="_blank" href="https://github.com/hermesonbastos">
-      <button class="btn btn-link">hermesonbastos</button>
+  <div class="flex flex-col items-center mt-6 gap-3">
+    <%= render 'auth/google_auth_button' %>
+    <a target="_blank" href="https://github.com/hermesonbastos" class="flex items-center text-center">
+      <button class="btn btn-link ancho btn-neutral">hermesonbastos</button>
+      <i class="fa-brands fa-github text-xl ml-[-10px]"></i>
     </a>
   </div>
 </div>
