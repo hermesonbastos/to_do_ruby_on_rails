@@ -25,6 +25,16 @@ class BoardsController < ApplicationController
     end
   end
 
+  def destroy
+    @board = Board.find(params[:id])
+    @board.destroy
+
+    respond_to do |format|
+      format.html { redirect_to boards_path }
+      format.turbo_stream
+    end
+  end
+
   private
 
   def board_params

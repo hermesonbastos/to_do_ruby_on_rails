@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :users, only: :show
 
-  resources :boards, only: %i[index show create] do
+  resources :boards, only: %i[index show create destroy] do
     resources :columns, only: %i[create update destroy] do
       patch :reorder, on: :collection
     end

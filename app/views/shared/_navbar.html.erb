@@ -1,5 +1,5 @@
 <div class="navbar bg-base-100 shadow-sm rounded-lg px-4 flex justify-between">
-  <div class="navbar-start hidden md:block">
+  <div class="navbar-start hidden md:flex">
     <% unless controller_name == "boards" && action_name == "index" %>
       <%= link_to boards_path, class: "btn btn-ghost flex items-center gap-1" do %>
         <i class="fa-solid fa-arrow-left text-lg"></i>
@@ -7,7 +7,7 @@
     <% end %>
   </div>
   <div class="navbar-center">
-    <a class="btn btn-ghost text-xl">ToDone</a>
+    <%= link_to "ToDone", boards_path, class: "btn btn-ghost text-xl" %>
   </div>
   <div class="navbar-end flex gap-3">
     <label class="flex cursor-pointer gap-2 items-center">
