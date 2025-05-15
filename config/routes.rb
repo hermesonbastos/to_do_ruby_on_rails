@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: redirect("/auth")
+  root to: "auth#new"
 
   get    "/auth",   to: "auth#new",     as: :auth
   post   "/auth",   to: "auth#create"
