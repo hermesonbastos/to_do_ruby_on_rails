@@ -1,0 +1,13 @@
+<input
+  type="checkbox"
+  id="edit-board-modal-<%= board.id %>"
+  class="modal-toggle"
+  <%= 'checked' if board.errors.any? %>
+/>
+<div class="modal">
+  <div class="modal-box" data-controller="banner-preview">
+    <h3 class="font-bold text-lg mb-4">Editar quadro</h3>
+    <%= render partial: "boards/form",
+                 locals: { board: board, modal_id: "edit-board-modal-#{board.id}" } %>
+  </div>
+</div>

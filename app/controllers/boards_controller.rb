@@ -1,5 +1,6 @@
 class BoardsController < ApplicationController
   before_action :require_login
+  before_action :set_board, only: %i[show update destroy]
 
   def index
     @boards = current_user.boards.order(created_at: :desc)
@@ -25,6 +26,19 @@ class BoardsController < ApplicationController
     end
   end
 
+  def update
+    if @board.update(board_params)
+      respond_to do |format|
+        format.html { redirect_to boards_path, notice: "Quadro atualizado com sucesso." }
+        format.turbo_stream
+      end
+    else
+      @boards = current_user.boards.order(created_at: :desc)
+      @metrics = UserMetrics.new(current_user)
+      render :index, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @board = Board.find(params[:id])
     @board.destroy
@@ -36,6 +50,10 @@ class BoardsController < ApplicationController
   end
 
   private
+
+  def set_board
+    @board = current_user.boards.find(params[:id])
+  end
 
   def board_params
     params.require(:board).permit(:name, :description, :banner)
