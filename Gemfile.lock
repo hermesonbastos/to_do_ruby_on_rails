@@ -114,7 +114,7 @@ GEM
     drb (2.2.1)
     ed25519 (1.4.0)
     erubi (1.13.1)
-    faker (3.5.1)
+    faker (3.5.2)
       i18n (>= 1.8.11, < 2)
     faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
